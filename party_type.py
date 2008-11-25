@@ -5,11 +5,12 @@ from trytond.osv import fields, OSV
 
 _STATES_PERSON = {
     "readonly": "active == False",
-    "invisible": "type != 'person'",
+    "readonly": "type != 'person'",
 }
 
 _CHANGE_NAME_FIELDS = [
     "type",
+    "person_name",
     "name_order",
     "first_name",
     "last_name",
@@ -32,17 +33,21 @@ class PartyType(OSV):
             states={"readonly": "active == False"})
     name = fields.Char("Name", size=None, required=True, select=1,
             states={"readonly": "active == False",
-                    "readonly": "type == 'person'"})
-    gender = fields.Selection(
-            [("male", "Male"),
-             ("female", "Female"),
-            ], "Gender", select=1, readonly=False, states=_STATES_PERSON)
+                    "invisible": "type == 'person'"})
+    person_name = fields.Function("get_person_name", type="char",
+            string="Name", required=False, states={
+                    "readonly": "active == False",
+                    "invisible": "type != 'person'"})
     last_name = fields.Char("Last Name", size=None,
-            required=False, on_change=_CHANGE_NAME_FIELDS,
-            states=_STATES_PERSON)
+            on_change=_CHANGE_NAME_FIELDS, states={
+                    "readonly": "active == False",
+                    "readonly": "type != 'person'",
+                    "required": "first_name == False and type == 'person'"})
     first_name = fields.Char("First Name", size=None,
-            required=False, on_change=_CHANGE_NAME_FIELDS,
-            states=_STATES_PERSON)
+            on_change=_CHANGE_NAME_FIELDS, states={
+                    "readonly": "active == False",
+                    "readonly": "type != 'person'",
+                    "required": "last_name == False and type == 'person'"})
     name_order = fields.Property(type="selection", selection=
             [("first_last", "<First-Name> <Last-Name>"),
              ("last_first", "<Last-Name> <First-Name>"),
@@ -50,6 +55,10 @@ class PartyType(OSV):
             ], string="Order", on_change=_CHANGE_NAME_FIELDS, required=True,
             states=_STATES_PERSON, help="The order of the name parts which " \
                     "build the party name of a person.")
+    gender = fields.Selection(
+            [("male", "Male"),
+             ("female", "Female"),
+            ], "Gender", select=1, readonly=False, states=_STATES_PERSON)
 
     def __init__(self):
         super(PartyType, self).__init__()
@@ -66,6 +75,22 @@ class PartyType(OSV):
     def default_gender(self, cursor, user, context=None):
         return "male"
 
+    def get_person_name(self, cursor, user, ids, name, args, context=None):
+        res={}
+        for item in self.browse(cursor, user, ids, context=context):
+            res[item.id] = item.name
+        return res
+
+    def write(self, cursor, user, ids, vals, context=None):
+        # Reset all person data for type organization:
+        if vals["type"] == "organization":
+            vals["last_name"] = False
+            vals["first_name"] = False
+            vals["name_order"] = None
+            vals["gender"] = None
+        return super(PartyType, self).write(cursor, user, ids, vals,
+                context=context)
+
     # This method (re-)build the name attribute for the records
     def _build_name(self, cursor, user, ids, vals, context=None):
         if context is None:
@@ -73,9 +98,8 @@ class PartyType(OSV):
         if isinstance(ids, (int, long)):
             ids = [ids]
         res = {}
-
+        res["name"] = ""
         if vals["type"] == "person":
-            print "vals:", vals
             first_name = vals["first_name"] or ''
             last_name = vals["last_name"] or ''
             if vals["name_order"] == "first_last":
@@ -95,6 +119,7 @@ class PartyType(OSV):
                         + first_name
             else:
                 pass
+        res["person_name"] = res["name"]
         return res
 
     def on_change_type(self, cursor, user, ids, vals, context=None):
@@ -111,6 +136,7 @@ class PartyType(OSV):
             res["last_name"] = False
             res["first_name"] = False
             res["name_order"] = None
+            res["gender"] = None
         return res
 
     def on_change_last_name(self, cursor, user, ids, vals, context=None):

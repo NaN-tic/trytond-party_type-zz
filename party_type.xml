@@ -54,23 +54,23 @@
                     <group col="8" colspan="6">
                         <label name="type"/>
                         <field name="type"/>
-                        <group col="2" colspan="2">
-                            <label name="name"/>
-                            <field name="name"/>
-<!--                            <label name="complete_person_name"/>
-                            <field name="complete_person_name"/> -->
-                        </group>
+                        <label name="name_order"/>
+                        <field name="name_order"/>
                         <label name="code"/>
                         <field name="code"/>
                         <label name="active"/>
                         <field name="active"/>
-                        <!-- Person Entity -->
+                        <!-- newline -->
+                        <group col="2" colspan="2">
+                            <label name="name"/>
+                            <field name="name"/>
+                            <label name="person_name"/>
+                            <field name="person_name"/>
+                        </group>
                         <label name="first_name"/>
                         <field name="first_name"/>
                         <label name="last_name"/>
                         <field name="last_name"/>
-                        <label name="name_order"/>
-                        <field name="name_order"/>
                         <label name="gender"/>
                         <field name="gender"/>
                     </group>
