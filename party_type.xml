@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of this
+	repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- Menu actions and Menu entrys -->
+        <record model="ir.action.act_window" id="act_organization_form">
+            <field name="name">Organizations</field>
+            <field name="res_model">party.party</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('entity', '=', 'organization')]</field>
+        </record>
+        <menuitem name="Organizations" parent="party.menu_party_form" 
+                sequence="10" action="act_organization_form" 
+                id="menu_organization_form"/>
+        <record model="ir.action.act_window" id="act_person_form">
+            <field name="name">Persons</field>
+            <field name="res_model">party.party</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('entity', '=', 'person')]</field>
+        </record>
+        <menuitem name="Persons" parent="party.menu_party_form" 
+                sequence="10" action="act_person_form" 
+                id="menu_person_form"/>
+        <!-- Properties -->
+        <record model="ir.property" id="property_party_name_order">
+            <field name="name">name_order</field>
+            <field name="field"
+                    search="[('model.model', '=', 'party.party'), 
+                    ('name', '=', 'name_order')]"/>
+            <field name="value">,last_first</field>
+        </record>
+
+        <!-- Views -->
+        <record model="ir.ui.view" id="party_view_form_extended">
+            <field name="model">party.party</field>
+            <field name="inherit" ref="party.party_view_form"/>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <data>
+                <xpath expr="/form/field[@name=&quot;active&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/label[@name=&quot;active&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/field[@name=&quot;name&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/label[@name=&quot;name&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/field[@name=&quot;code&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/label[@name=&quot;code&quot;]"
+                        position="replace"/>
+                <xpath expr="/form/notebook" position="before">
+                    <group col="12" colspan="6">
+                        <label name="name"/>
+                        <field name="name"/>
+                        <label name="complete_person_name"/>
+                        <field name="complete_person_name"/>
+                        <label name="entity"/>
+                        <field name="entity"/>
+                        <label name="code"/>
+                        <field name="code"/>
+                        <label name="active"/>
+                        <field name="active"/>
+                    </group>
+                    <!-- Person Entity -->
+                    <group col="8" colspan="6">
+                    <label name="person_first_name" align="0.0"/>
+                    <label name="person_last_name" align="0.0"/>
+                    <label name="person_gender" align="0.0"/>
+                    <newline/>
+                    <field name="person_first_name" fill="1" xexpand="1"
+                            expand="1"/>
+                    <field name="person_last_name" fill="1" xexpand="1"
+                            expand="1"/>
+                    <field name="person_gender" width="30"/>
+                    </group>
+                </xpath>
+                </data>
+                ]]>
+            </field>
+        </record>
+    </data>
+</tryton>
