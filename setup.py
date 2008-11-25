@@ -21,22 +21,21 @@ major_version, minor_version, _ = info.get('version', '0.0.1').split('.', 2)
 requires.append('trytond >= %s.%s' % (major_version, minor_version))
 requires.append('trytond < %s.%s' % (major_version, str(int(minor_version) + 1)))
 
-setup(name='trytond_account_de_skr03_2008',
+setup(name='trytond_party_type',
     version=info.get('version', '0.0.1'),
     description=info.get('description', ''),
     author=info.get('author', ''),
     author_email=info.get('email', ''),
     url=info.get('website', ''),
-    long_description = "http://mercurial.intuxication.org/tryton/" + \
-            "account_de_skr03_2008/rev/2a04de0e5b75/",
-    download_url="http://downloads.tryton.org/" + \
+    long_description = "http://mercurial.intuxication.org/hg/party_type",
+    download_url="http://mercurial.intuxication.org/hg/party_type" + \
            info.get('version', '0.0.1').rsplit('.', 1)[0] + '/',
-    package_dir={'trytond.modules.account_de_skr03_2008': '.'},
+    package_dir={'trytond.modules.party_types': '.'},
     packages=[
-        'trytond.modules.account_de_skr03_2008',
+        'trytond.modules.party_types',
     ],
     package_data={
-        'trytond.modules.account_de_skr03_2008': info.get('xml', []) \
+        'trytond.modules.party_types': info.get('xml', []) \
                 + info.get('translation', [])
     },
     classifiers=[
@@ -50,13 +49,13 @@ setup(name='trytond_account_de_skr03_2008',
         'Natural Language :: German',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Topic :: Office/Business :: Financial :: Accounting',
+        'Topic :: Office/Business',
     ],
     license='GPL-3',
     install_requires=requires,
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    account_de_skr03_2008 = trytond.modules.account_de_skr03_2008
+    party_type = trytond.modules.party_type
     """,
 )
