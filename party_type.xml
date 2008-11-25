@@ -52,29 +52,27 @@
                         position="replace"/>
                 <xpath expr="/form/notebook" position="before">
                     <group col="8" colspan="6">
+                        <label name="type"/>
+                        <field name="type"/>
                         <group col="2" colspan="2">
                             <label name="name"/>
                             <field name="name"/>
                             <label name="complete_person_name"/>
                             <field name="complete_person_name"/>
                         </group>
-                        <label name="type"/>
-                        <field name="type"/>
                         <label name="code"/>
                         <field name="code"/>
                         <label name="active"/>
                         <field name="active"/>
-                    </group>
-                    <!-- Person Entity -->
-                    <group col="8" colspan="6">
-                    <label name="person_first_name"/>
-                    <field name="person_first_name"/>
-                    <label name="person_last_name"/>
-                    <field name="person_last_name"/>
-                    <label name="name_order"/>
-                    <field name="name_order"/>
-                    <label name="person_gender"/>
-                    <field name="person_gender"/>
+                        <!-- Person Entity -->
+                        <label name="person_first_name"/>
+                        <field name="person_first_name"/>
+                        <label name="person_last_name"/>
+                        <field name="person_last_name"/>
+                        <label name="name_order"/>
+                        <field name="name_order"/>
+                        <label name="person_gender"/>
+                        <field name="person_gender"/>
                     </group>
                 </xpath>
                 </data>
