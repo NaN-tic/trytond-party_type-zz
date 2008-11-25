@@ -10,8 +10,8 @@
             <field name="view_type">form</field>
             <field name="domain">[('type', '=', 'organization')]</field>
         </record>
-        <menuitem name="Organizations" parent="party.menu_party_form" 
-                sequence="10" action="act_organization_form" 
+        <menuitem name="Organizations" parent="party.menu_party_form"
+                sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Persons</field>
@@ -19,14 +19,14 @@
             <field name="view_type">form</field>
             <field name="domain">[('type', '=', 'person')]</field>
         </record>
-        <menuitem name="Persons" parent="party.menu_party_form" 
-                sequence="10" action="act_person_form" 
+        <menuitem name="Persons" parent="party.menu_party_form"
+                sequence="10" action="act_person_form"
                 id="menu_person_form"/>
         <!-- Properties -->
         <record model="ir.property" id="property_party_name_order">
             <field name="name">name_order</field>
             <field name="field"
-                    search="[('model.model', '=', 'party.party'), 
+                    search="[('model.model', '=', 'party.party'),
                     ('name', '=', 'name_order')]"/>
             <field name="value">,last_first</field>
         </record>
@@ -57,22 +57,22 @@
                         <group col="2" colspan="2">
                             <label name="name"/>
                             <field name="name"/>
-                            <label name="complete_person_name"/>
-                            <field name="complete_person_name"/>
+<!--                            <label name="complete_person_name"/>
+                            <field name="complete_person_name"/> -->
                         </group>
                         <label name="code"/>
                         <field name="code"/>
                         <label name="active"/>
                         <field name="active"/>
                         <!-- Person Entity -->
-                        <label name="person_first_name"/>
-                        <field name="person_first_name"/>
-                        <label name="person_last_name"/>
-                        <field name="person_last_name"/>
+                        <label name="first_name"/>
+                        <field name="first_name"/>
+                        <label name="last_name"/>
+                        <field name="last_name"/>
                         <label name="name_order"/>
                         <field name="name_order"/>
-                        <label name="person_gender"/>
-                        <field name="person_gender"/>
+                        <label name="gender"/>
+                        <field name="gender"/>
                     </group>
                 </xpath>
                 </data>
