@@ -8,7 +8,7 @@
             <field name="name">Organizations</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
-            <field name="domain">[('entity', '=', 'organization')]</field>
+            <field name="domain">[('type', '=', 'organization')]</field>
         </record>
         <menuitem name="Organizations" parent="party.menu_party_form" 
                 sequence="10" action="act_organization_form" 
@@ -17,7 +17,7 @@
             <field name="name">Persons</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
-            <field name="domain">[('entity', '=', 'person')]</field>
+            <field name="domain">[('type', '=', 'person')]</field>
         </record>
         <menuitem name="Persons" parent="party.menu_party_form" 
                 sequence="10" action="act_person_form" 
@@ -51,13 +51,15 @@
                 <xpath expr="/form/label[@name=&quot;code&quot;]"
                         position="replace"/>
                 <xpath expr="/form/notebook" position="before">
-                    <group col="12" colspan="6">
-                        <label name="name"/>
-                        <field name="name"/>
-                        <label name="complete_person_name"/>
-                        <field name="complete_person_name"/>
-                        <label name="entity"/>
-                        <field name="entity"/>
+                    <group col="8" colspan="6">
+                        <group col="2" colspan="2">
+                            <label name="name"/>
+                            <field name="name"/>
+                            <label name="complete_person_name"/>
+                            <field name="complete_person_name"/>
+                        </group>
+                        <label name="type"/>
+                        <field name="type"/>
                         <label name="code"/>
                         <field name="code"/>
                         <label name="active"/>
@@ -65,15 +67,14 @@
                     </group>
                     <!-- Person Entity -->
                     <group col="8" colspan="6">
-                    <label name="person_first_name" align="0.0"/>
-                    <label name="person_last_name" align="0.0"/>
-                    <label name="person_gender" align="0.0"/>
-                    <newline/>
-                    <field name="person_first_name" fill="1" xexpand="1"
-                            expand="1"/>
-                    <field name="person_last_name" fill="1" xexpand="1"
-                            expand="1"/>
-                    <field name="person_gender" width="30"/>
+                    <label name="person_first_name"/>
+                    <field name="person_first_name"/>
+                    <label name="person_last_name"/>
+                    <field name="person_last_name"/>
+                    <label name="name_order"/>
+                    <field name="name_order"/>
+                    <label name="person_gender"/>
+                    <field name="person_gender"/>
                     </group>
                 </xpath>
                 </data>
