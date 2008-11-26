@@ -12,16 +12,17 @@
         </record>
         <menuitem name="Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
-                id="menu_organization_form"/>
+                id="menu_organization_form" icon="tryton-list"/>
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Persons</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
             <field name="domain">[('type', '=', 'person')]</field>
+            <field name="context">{'type': 'person'}</field>
         </record>
         <menuitem name="Persons" parent="party.menu_party_form"
                 sequence="10" action="act_person_form"
-                id="menu_person_form"/>
+                id="menu_person_form" icon="tryton-list"/>
         <!-- Properties -->
         <record model="ir.property" id="property_party_name_order">
             <field name="name">name_order</field>

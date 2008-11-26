@@ -24,7 +24,7 @@ class PartyType(OSV):
     attributes firstname, lastname and gender.
     A party with the type 'Orgaization' has no additional attributes.
     """
-    _description = __doc__
+    _description = "PartyType"
     _name = "party.party"
 
     type = fields.Selection(
@@ -67,7 +67,9 @@ class PartyType(OSV):
         return True
 
     def default_type(self, cursor, user, context=None):
-        return "organization"
+        if context is None:
+            context = {}
+        return context.get('type', 'organization')
 
     def default_name_order(self, cursor, user, context=None):
         return "last_first"
@@ -76,12 +78,20 @@ class PartyType(OSV):
         return "male"
 
     def get_person_name(self, cursor, user, ids, name, args, context=None):
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         res={}
         for item in self.browse(cursor, user, ids, context=context):
             res[item.id] = item.name
         return res
 
     def write(self, cursor, user, ids, vals, context=None):
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         # Reset all person data for type organization:
         if vals["type"] == "organization":
             vals["last_name"] = False
@@ -125,6 +135,10 @@ class PartyType(OSV):
     def on_change_type(self, cursor, user, ids, vals, context=None):
         # On change of the type from 'person' to 'organization' or reversed,
         # we need to delete all the opposide type fields
+        if context is None:
+            context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         if not "type" in vals:
             return {}
         res = {}
