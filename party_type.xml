@@ -31,7 +31,6 @@
                     ('name', '=', 'name_order')]"/>
             <field name="value">,last_first</field>
         </record>
-
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_form_extended">
             <field name="model">party.party</field>
@@ -62,12 +61,8 @@
                         <label name="active"/>
                         <field name="active"/>
                         <!-- newline -->
-                        <group col="2" colspan="2">
-                            <label name="name"/>
-                            <field name="name"/>
-                            <label name="person_name"/>
-                            <field name="person_name"/>
-                        </group>
+                        <label name="party_name"/>
+                        <field name="party_name"/>
                         <label name="first_name"/>
                         <field name="first_name"/>
                         <label name="last_name"/>
