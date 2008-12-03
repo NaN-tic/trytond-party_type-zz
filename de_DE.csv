@@ -1,0 +1,19 @@
+type,name,res_id,src,value,fuzzy
+field,"party.party,first_name",0,First Name,Vorname,0
+field,"party.party,gender",0,Gender,Geschlecht,0
+field,"party.party,last_name",0,Last Name,Nachname,0
+field,"party.party,name_order",0,Order,Reihenfolge,0
+field,"party.party,party_name",0,Name,Name,0
+field,"party.party,type",0,Type,Typ,0
+help,"party.party,name_order",0,The order of the name parts which build the party name of a person.,"Reihenfolge der Einzelnamen, wie sie zur Bildung des Parteinamens einer Person verwendet werden",0
+model,"ir.action,name",act_organization_form,Organizations,Organisationen,0
+model,"ir.action,name",act_person_form,Persons,Personen,0
+model,"ir.ui.menu,name",menu_organization_form,Organizations,Organisationen,0
+model,"ir.ui.menu,name",menu_person_form,Persons,Personen,0
+selection,"party.party,gender",0,Female,Weiblich,0
+selection,"party.party,gender",0,Male,Männlich,0
+selection,"party.party,name_order",0,<First-Name> <Last-Name>,"<Vorname>, <Nachname>",0
+selection,"party.party,name_order",0,<Last-Name> <First-Name>,"<Nachname>, <Vorname>",0
+selection,"party.party,name_order",0,"<Last-Name>, <First-Name>","<Nachname>, <Vorname>",0
+selection,"party.party,type",0,Organization,Organisation,0
+selection,"party.party,type",0,Person,Person,0
