@@ -4,8 +4,7 @@
 from trytond.osv import fields, OSV
 
 _STATES_PERSON = {
-    "readonly": "active == False",
-    "readonly": "type != 'person'",
+    "readonly": "active == False or type != 'person'",
 }
 
 _CHANGE_NAME_FIELDS = [
@@ -34,29 +33,26 @@ class Party(OSV):
     party_name = fields.Function("get_party_name", type="char",
             fnct_inv='set_party_name', on_change=_CHANGE_NAME_FIELDS,
             string="Name", required=True,
-            states={"readonly": "active == False",
-                    "readonly": "type != 'organization'"})
+            states={"readonly": "active == False or type != 'organization'"})
     last_name = fields.Char("Last Name", size=None,
             on_change=_CHANGE_NAME_FIELDS, states={
-                    "readonly": "active == False",
-                    "readonly": "type != 'person'",
+                    "readonly": "active == False or type != 'person'",
                     "required": "first_name == False and type == 'person'"})
     first_name = fields.Char("First Name", size=None,
             on_change=_CHANGE_NAME_FIELDS, states={
-                    "readonly": "active == False",
-                    "readonly": "type != 'person'",
+                    "readonly": "active == False or type != 'person'",
                     "required": "last_name == False and type == 'person'"})
     name_order = fields.Property(type="selection", selection=
-            [("first_last", "<First-Name> <Last-Name>"),
-             ("last_first", "<Last-Name> <First-Name>"),
-             ("last_comma_first", "<Last-Name>, <First-Name>")],
-            string="Order", on_change=_CHANGE_NAME_FIELDS, required=True,
+            [("last_comma_first", "<Last-Name>, <First-Name>"),
+             ("first_last", "<First-Name> <Last-Name>"),
+             ("last_first", "<Last-Name> <First-Name>"),], string="Order",
+             on_change=_CHANGE_NAME_FIELDS, required=True, sort=False,
             states=_STATES_PERSON, help="The order of the name parts which " \
                     "build the party name of a person.")
     gender = fields.Selection(
             [("male", "Male"),
-             ("female", "Female")],
-            "Gender", select=1, readonly=False, states=_STATES_PERSON)
+             ("female", "Female")], "Gender", select=1, sort=False,
+             readonly=False, states=_STATES_PERSON)
 
     def __init__(self):
         super(Party, self).__init__()
@@ -102,13 +98,14 @@ class Party(OSV):
         return
 
     def create(self, cursor, user, vals, context=None):
+        print "create vals:", vals
         if context is None:
             context = {}
         vals = self._cleanup_organization_vals(vals)
         if "party_name" in vals:
-            vals["name"] = vals["party_name"]
+            vals["name"] = vals["party_name"] or vals["name"]
         return super(Party, self).create(cursor, user, vals,
-                context=context)
+               context=context)
 
     def write(self, cursor, user, ids, vals, context=None):
         if context is None:
