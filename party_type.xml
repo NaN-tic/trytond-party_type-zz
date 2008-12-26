@@ -8,7 +8,7 @@
             <field name="name">Organizations</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
-            <field name="domain">[('type', '=', 'organization')]</field>
+            <field name="domain">[('party_type', '=', 'organization')]</field>
         </record>
         <menuitem name="Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
@@ -17,20 +17,20 @@
             <field name="name">Persons</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
-            <field name="domain">[('type', '=', 'person')]</field>
-            <field name="context">{'type': 'person'}</field>
+            <field name="domain">[('party_type', '=', 'person')]</field>
+            <field name="context">{'party_type': 'person'}</field>
         </record>
         <menuitem name="Persons" parent="party.menu_party_form"
                 sequence="10" action="act_person_form"
                 id="menu_person_form" icon="tryton-list"/>
         <!-- Properties -->
-        <record model="ir.property" id="property_party_name_order">
+<!--        <record model="ir.property" id="property_party_name_order">
             <field name="name">name_order</field>
             <field name="field"
                     search="[('model.model', '=', 'party.party'),
                     ('name', '=', 'name_order')]"/>
             <field name="value">,last_first</field>
-        </record>
+        </record> -->
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_form_extended">
             <field name="model">party.party</field>
@@ -38,38 +38,29 @@
             <field name="arch" type="xml">
                 <![CDATA[
                 <data>
-                <xpath expr="/form/field[@name=&quot;active&quot;]"
-                        position="replace"/>
-                <xpath expr="/form/label[@name=&quot;active&quot;]"
-                        position="replace"/>
-                <xpath expr="/form/field[@name=&quot;name&quot;]"
-                        position="replace"/>
-                <xpath expr="/form/label[@name=&quot;name&quot;]"
-                        position="replace"/>
-                <xpath expr="/form/field[@name=&quot;code&quot;]"
-                        position="replace"/>
-                <xpath expr="/form/label[@name=&quot;code&quot;]"
-                        position="replace"/>
                 <xpath expr="/form/notebook" position="before">
-                    <group col="8" colspan="6">
-                        <label name="type"/>
-                        <field name="type"/>
+                    <label name="party_type"/>
+                    <field name="party_type"/>
+                    <label name="first_name"/>
+                    <field name="first_name"/>
+                    <label name="last_name"/>
+                    <field name="last_name"/>
+                    <label name="gender"/>
+                    <field name="gender"/>
+                </xpath>
+                </data>
+                ]]>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="company_view_form_extended">
+            <field name="model">company.company</field>
+            <field name="inherit" ref="company.company_view_form"/>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <data>
+                <xpath expr="/form/notebook" position="before">
                         <label name="name_order"/>
                         <field name="name_order"/>
-                        <label name="code"/>
-                        <field name="code"/>
-                        <label name="active"/>
-                        <field name="active"/>
-                        <!-- newline -->
-                        <label name="party_name"/>
-                        <field name="party_name"/>
-                        <label name="first_name"/>
-                        <field name="first_name"/>
-                        <label name="last_name"/>
-                        <field name="last_name"/>
-                        <label name="gender"/>
-                        <field name="gender"/>
-                    </group>
                 </xpath>
                 </data>
                 ]]>

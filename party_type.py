@@ -4,13 +4,12 @@
 from trytond.osv import fields, OSV
 
 _STATES_PERSON = {
-    "readonly": "active == False or type != 'person'",
+    "readonly": "active == False or party_type != 'person'",
 }
 
 _CHANGE_NAME_FIELDS = [
-    "type",
+    "party_type",
     "party_name",
-    "name_order",
     "first_name",
     "last_name",
 ]
@@ -26,29 +25,22 @@ class Party(OSV):
     _description = "PartyType"
     _name = "party.party"
 
-    type = fields.Selection(
+    party_type = fields.Selection(
             [("organization", "Organization"), ("person", "Person")],
-            "Type", on_change=['type'], select=1, readonly=False,
+            "Party Type", on_change=['party_type'], select=1, readonly=False,
             states={"readonly": "active == False"})
     party_name = fields.Function("get_party_name", type="char",
             fnct_inv='set_party_name', on_change=_CHANGE_NAME_FIELDS,
             string="Name", required=True,
-            states={"readonly": "active == False or type != 'organization'"})
+            states={"readonly": "active == False or party_type != 'organization'"})
     last_name = fields.Char("Last Name", size=None,
             on_change=_CHANGE_NAME_FIELDS, states={
-                    "readonly": "active == False or type != 'person'",
-                    "required": "first_name == False and type == 'person'"})
+                    "readonly": "active == False or party_type != 'person'",
+                    "required": "first_name == False and party_type == 'person'"})
     first_name = fields.Char("First Name", size=None,
             on_change=_CHANGE_NAME_FIELDS, states={
-                    "readonly": "active == False or type != 'person'",
-                    "required": "last_name == False and type == 'person'"})
-    name_order = fields.Property(type="selection", selection=
-            [("last_comma_first", "<Last-Name>, <First-Name>"),
-             ("first_last", "<First-Name> <Last-Name>"),
-             ("last_first", "<Last-Name> <First-Name>"),], string="Order",
-             on_change=_CHANGE_NAME_FIELDS, required=True, sort=False,
-            states=_STATES_PERSON, help="The order of the name parts which " \
-                    "build the party name of a person.")
+                    "readonly": "active == False or party_type != 'person'",
+                    "required": "last_name == False and party_type == 'person'"})
     gender = fields.Selection(
             [("male", "Male"),
              ("female", "Female")], "Gender", select=1, sort=False,
@@ -67,10 +59,8 @@ class Party(OSV):
         """
         if context is None:
             context = {}
-        return context.get('type', 'organization')
+        return context.get('party_type', 'organization')
 
-    def default_name_order(self, cursor, user, context=None):
-        return "last_first"
 
     def default_gender(self, cursor, user, context=None):
         return "male"
@@ -120,11 +110,10 @@ class Party(OSV):
         """
         This private method resets all person data for type organization.
         """
-        if "type" in vals:
-            if vals["type"] == "organization":
+        if "party_type" in vals:
+            if vals["party_type"] == "organization":
                 vals["last_name"] = False
                 vals["first_name"] = False
-                vals["name_order"] = None
                 vals["gender"] = None
         return vals
 
@@ -138,7 +127,12 @@ class Party(OSV):
         if isinstance(ids, (int, long)):
             ids = [ids]
         res = {}
-        if vals["type"] == "person":
+        #Get the name order from users company object.
+        user_obj = self.pool.get('res.user')
+        user = user_obj.browse(cursor, user, user, context=context)
+        vals['name_order'] = user.company.name_order
+
+        if vals["party_type"] == "person":
             res["name"] = ""
             first_name = vals["first_name"] or ''
             last_name = vals["last_name"] or ''
@@ -159,7 +153,7 @@ class Party(OSV):
                         + first_name
             else:
                 pass
-        elif vals["type"] == "organization":
+        elif vals["party_type"] == "organization":
             if "name" in vals:
                 res["name"] = vals["name"]
         else:
@@ -170,7 +164,7 @@ class Party(OSV):
             res["party_name"] = None
         return res
 
-    def on_change_type(self, cursor, user, ids, vals, context=None):
+    def on_change_party_type(self, cursor, user, ids, vals, context=None):
         """
         This method deletes the opposide related fields, when changeing from
         'person' to 'organization' or vice versa.
@@ -179,7 +173,7 @@ class Party(OSV):
             context = {}
         if isinstance(ids, (int, long)):
             ids = [ids]
-        if not "type" in vals:
+        if not "party_type" in vals:
             return {}
         res = {}
         # Reset person data:
@@ -194,9 +188,6 @@ class Party(OSV):
     def on_change_first_name(self, cursor, user, ids, vals, context=None):
         return self._build_name(cursor, user, ids, vals, context=None)
 
-    def on_change_name_order(self, cursor, user, ids, vals, context=None):
-        return self._build_name(cursor, user, ids, vals, context=None)
-
     def on_change_party_name(self, cursor, user, ids, vals, context=None):
         if context is None:
             context = {}
@@ -208,3 +199,34 @@ class Party(OSV):
         return self._build_name(cursor, user, ids, vals, context=None)
 
 Party()
+
+class Company(OSV):
+    """Class: Company(OSV)
+    This class adds preferences
+    <Last-Name>, <First-Name>
+    <First-Name> <Last-Name>
+    <Last-Name> <First-Name>
+    for party type Person to the company.
+    """
+    _description = "Company"
+    _name = "company.company"
+
+    name_order = fields.Selection(
+            [("last_comma_first", "<Last-Name>, <First-Name>"),
+             ("first_last", "<First-Name> <Last-Name>"),
+             ("last_first", "<Last-Name> <First-Name>"),], "Order",
+            required=True, sort=False, help="The order of the name parts " \
+                    "which build the party name of type person.")
+
+    def __init__(self):
+        super(Company, self).__init__()
+
+    def default_name_order(self, cursor, user, context=None):
+        return "last_comma_first"
+
+    def on_change_party_type(self, cursor, user, ids, vals, context=None):
+        print "company.on_change_party_type in"
+        return super(Company, self).on_change_party_type(self, cursor, user,
+                ids, vals, context=None)
+
+Company()
