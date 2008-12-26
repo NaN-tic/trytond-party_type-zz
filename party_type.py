@@ -52,7 +52,7 @@ class Party(OSV):
     def default_active(self, cursor, user, context=None):
         return True
 
-    def default_type(self, cursor, user, context=None):
+    def default_party_type(self, cursor, user, context=None):
         """
         This method sets the default for field type, depending on the context
         defined in party_type.xml
@@ -225,8 +225,12 @@ class Company(OSV):
         return "last_comma_first"
 
     def on_change_party_type(self, cursor, user, ids, vals, context=None):
-        print "company.on_change_party_type in"
-        return super(Company, self).on_change_party_type(self, cursor, user,
-                ids, vals, context=None)
-
+        # TODO: This method makes problems. It needed to be called on
+        # party_type object. But how to?
+        # The same is TODO with module party_bank. It even needed to be inherited
+        # in a class
+        # and depended in __tryton__.py.
+        party_obj = self.pool.get('party.party')
+        return party_obj.on_change_party_type(cursor, user, ids, vals,
+                context=context)
 Company()
