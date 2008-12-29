@@ -23,15 +23,27 @@
         <menuitem name="Persons" parent="party.menu_party_form"
                 sequence="10" action="act_person_form"
                 id="menu_person_form" icon="tryton-list"/>
-        <!-- Properties -->
-<!--        <record model="ir.property" id="property_party_name_order">
-            <field name="name">name_order</field>
-            <field name="field"
-                    search="[('model.model', '=', 'party.party'),
-                    ('name', '=', 'name_order')]"/>
-            <field name="value">,last_first</field>
-        </record> -->
         <!-- Views -->
+        <record model="ir.ui.view" id="party_view_tree_extended">
+            <field name="model">party.party</field>
+            <field name="type">tree</field>
+            <field name="inherit" ref="party.party_view_tree"/>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <data>
+                <xpath expr="/tree/field[@name=&quot;name&quot;]"
+                        position="before">
+                    <field name="party_type" select="1"/>
+                </xpath>
+                <xpath expr="/tree/field[@name=&quot;name&quot;]"
+                        position="after">
+                    <field name="first_name" select="1"/>
+                    <field name="gender" select="1"/>
+                </xpath>
+                </data>
+                ]]>
+            </field>
+        </record>
         <record model="ir.ui.view" id="party_view_form_extended">
             <field name="model">party.party</field>
             <field name="inherit" ref="party.party_view_form"/>
@@ -40,27 +52,11 @@
                 <data>
                 <xpath expr="/form/notebook" position="before">
                     <label name="party_type"/>
-                    <field name="party_type"/>
+                    <field name="party_type" select="1"/>
                     <label name="first_name"/>
-                    <field name="first_name"/>
-                    <label name="last_name"/>
-                    <field name="last_name"/>
+                    <field name="first_name" select="1"/>
                     <label name="gender"/>
-                    <field name="gender"/>
-                </xpath>
-                </data>
-                ]]>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="company_view_form_extended">
-            <field name="model">company.company</field>
-            <field name="inherit" ref="company.company_view_form"/>
-            <field name="arch" type="xml">
-                <![CDATA[
-                <data>
-                <xpath expr="/form/notebook" position="before">
-                        <label name="name_order"/>
-                        <field name="name_order"/>
+                    <field name="gender" select="1"/>
                 </xpath>
                 </data>
                 ]]>

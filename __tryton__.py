@@ -15,7 +15,7 @@
         Unterscheidung in 'Organisationen' und 'Personen' wie beschrieben
         in Silverston Len:"The Data Model Resource Book", Revised Edition,
         Volume 1, S. 21f.''',
-    'depends':     ['ir', 'res', 'party', 'company'],
+    'depends':     ['ir', 'res', 'party',],
     'xml':         [
                      'party_type.xml',
                    ],
