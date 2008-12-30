@@ -5,7 +5,7 @@
     'name':        'Party Types for People and Organisations',
     'name_de_DE':  "Geschäftsparteitypen 'Person' und 'Organisation'",
     'version':     '0.0.3',
-    'author':      'Udo Spallek',
+    'author':      'virtual things',
     'email':       'udono@virtual-things.biz',
     'website':     'http://www.virtual-things.biz/',
     'description': '''Extend party by the types 'person' or
