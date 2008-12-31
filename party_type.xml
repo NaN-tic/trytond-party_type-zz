@@ -55,11 +55,14 @@
                         position="before">
                     <label name="party_type"/>
                     <field name="party_type" select="1"/>
+                    <newline/>
+                </xpath>
+                <xpath expr="/form/field[@name='name']"
+                        position="after">
                     <label name="first_name"/>
                     <field name="first_name" select="1"/>
                     <label name="gender"/>
                     <field name="gender" select="1"/>
-                <newline/>
                 </xpath>
                 </data>
                 ]]>
