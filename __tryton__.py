@@ -6,7 +6,7 @@
     'name_de_DE':  "Geschäftsparteitypen 'Person' und 'Organisation'",
     'version':     '0.0.3',
     'author':      'virtual things',
-    'email':       'udono@virtual-things.biz',
+    'email':       'info@virtual-things.biz',
     'website':     'http://www.virtual-things.biz/',
     'description': '''Extend party by the types 'person' or
         'organization' as described by Len Silverston in "The Data Model

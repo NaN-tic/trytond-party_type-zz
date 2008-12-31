@@ -11,7 +11,7 @@ Prerequisites
 Installation
 ------------
 
-Once you've downloaded and unpacked the trytond_account_statement source release, enter the
+Once you've downloaded and unpacked the trytond_party_type source release, enter the
 directory where the archive was unpacked, and run:
 
     python setup.py install
@@ -27,4 +27,4 @@ documentation:
   http://docs.python.org/inst/inst.html
 
 To use without installation, extract the archive into ``trytond/modules`` with
-the directory name account_statement.
+the directory name party_type.
