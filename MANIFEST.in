@@ -2,7 +2,5 @@ include COPYRIGHT
 include LICENSE
 include INSTALL
 include README
-include TODO
 include *.xml
-include *.odt
 include *.csv
