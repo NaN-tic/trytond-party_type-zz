@@ -22,11 +22,11 @@ class Party(OSV):
             [("organization", "Organization"), ("person", "Person")],
             "Party Type", select=1, readonly=False,
             states={"readonly": "active == False"})
-    first_name = fields.Char("Person First Name", size=None, states=_STATES_PERSON)
+    first_name = fields.Char("First Name", size=None, states=_STATES_PERSON)
     gender = fields.Selection(
             [("male", "Male"),
              ("female", "Female"),
-             ("","")], "Person Gender", select=1, sort=False,
+             ("","")], "Gender", select=1, sort=False,
              readonly=False, states=_STATES_PERSON)
 
     def __init__(self):

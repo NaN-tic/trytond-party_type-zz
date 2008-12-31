@@ -31,11 +31,11 @@
             <field name="arch" type="xml">
                 <![CDATA[
                 <data>
-                <xpath expr="/tree/field[@name=&quot;name&quot;]"
+                <xpath expr="/tree/field[@name='name']"
                         position="before">
                     <field name="party_type" select="1"/>
                 </xpath>
-                <xpath expr="/tree/field[@name=&quot;name&quot;]"
+                <xpath expr="/tree/field[@name='name']"
                         position="after">
                     <field name="first_name" select="1"/>
                     <field name="gender" select="1"/>
@@ -47,16 +47,23 @@
         <record model="ir.ui.view" id="party_view_form_extended">
             <field name="model">party.party</field>
             <field name="inherit" ref="party.party_view_form"/>
+            <field name="priority">65535</field>
             <field name="arch" type="xml">
                 <![CDATA[
                 <data>
-                <xpath expr="/form/notebook" position="before">
+                <xpath expr="/form/label[@name='name']" 
+                        position="before">
                     <label name="party_type"/>
                     <field name="party_type" select="1"/>
+                    <newline/>
+                </xpath>
+                <xpath expr="/form/field[@name='active']" 
+                        position="after">
                     <label name="first_name"/>
                     <field name="first_name" select="1"/>
                     <label name="gender"/>
                     <field name="gender" select="1"/>
+                    <newline/>
                 </xpath>
                 </data>
                 ]]>
