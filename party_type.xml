@@ -38,7 +38,7 @@
                 <xpath expr="/tree/field[@name='name']"
                         position="after">
                     <field name="first_name" select="1"/>
-                    <field name="gender" select="1"/>
+                    <field name="gender" select="2"/>
                 </xpath>
                 </data>
                 ]]>
@@ -57,16 +57,16 @@
                 <xpath expr="/form/label[@name='name']"
                         position="replace">
                     <label name="party_type"/>
-                    <field name="party_type" select="1"/>
+                    <field name="party_type"/>
                 </xpath>
                 <xpath expr="/form/field[@name='active']"
                         position="after">
                     <label name="name"/>
-                    <field name="name" select="1"/>
+                    <field name="name"/>
                     <label name="first_name"/>
-                    <field name="first_name" select="1"/>
+                    <field name="first_name"/>
                     <label name="gender"/>
-                    <field name="gender" select="1"/>
+                    <field name="gender"/>
                 </xpath>
                 </data>
                 ]]>
