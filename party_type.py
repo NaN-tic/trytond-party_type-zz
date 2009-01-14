@@ -1,11 +1,11 @@
-#This file is part of Tryton.  The COPYRIGHT file at the top level of this
+﻿#This file is part of Tryton.  The COPYRIGHT file at the top level of this
 #repository contains the full copyright notices and license terms.
 
 from trytond.osv import fields, OSV
 
 _STATES_PERSON = {
-    "readonly": "active == False or party_type != 'person'",
-    "invisible": "party_type != 'person'",
+    "readonly": "active == False or party_type != 'person'", 
+    "invisible": "party_type != 'person'", 
 }
 
 class Party(OSV):
@@ -19,14 +19,14 @@ class Party(OSV):
     _name = "party.party"
 
     party_type = fields.Selection(
-            [("organization", "Organization"), ("person", "Person")],
-            "Party Type", select=1, readonly=False,
+            [("organization", "Organization"), ("person", "Person")], 
+            "Party Type", select=1, readonly=False, 
             states={"readonly": "active == False"})
     first_name = fields.Char("First Name", size=None, states=_STATES_PERSON)
     gender = fields.Selection(
-            [("male", "Male"),
-             ("female", "Female"),
-             ("","")], "Gender", select=1, sort=False,
+            [("male", "Male"), 
+             ("female", "Female"), 
+             ("", "")], "Gender", select=1, sort=False, 
              readonly=False, states=_STATES_PERSON)
 
     def __init__(self):
