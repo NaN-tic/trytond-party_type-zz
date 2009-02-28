@@ -4,8 +4,8 @@
 from trytond.osv import fields, OSV
 
 _STATES_PERSON = {
-    "readonly": "active == False or party_type != 'person'", 
-    "invisible": "party_type != 'person'", 
+    "readonly": "active == False or party_type != 'person'",
+    "invisible": "party_type != 'person'",
 }
 
 class Party(OSV):
@@ -19,14 +19,14 @@ class Party(OSV):
     _name = "party.party"
 
     party_type = fields.Selection(
-            [("organization", "Organization"), ("person", "Person")], 
-            "Party Type", select=1, readonly=False, 
+            [("organization", "Organization"), ("person", "Person")],
+            "Party Type", select=1, readonly=False,
             states={"readonly": "active == False"})
     first_name = fields.Char("First Name", size=None, states=_STATES_PERSON)
     gender = fields.Selection(
-            [("male", "Male"), 
-             ("female", "Female"), 
-             ("", "")], "Gender", select=1, sort=False, 
+            [("male", "Male"),
+             ("female", "Female"),
+             ("", "")], "Gender", select=1, sort=False,
              readonly=False, states=_STATES_PERSON)
 
     def __init__(self):
@@ -40,5 +40,14 @@ class Party(OSV):
         if context is None:
             context = {}
         return context.get('party_type', 'organization')
+
+    def get_rec_name(self, cursor, user, ids, name, arg, context=None):
+        if not ids:
+            return {}
+        res = {}
+        for party in self.browse(cursor, user, ids, context=context):
+            res[party.id] = ", ".join(x for x in [party.name,
+                party.first_name] if x)
+        return res
 
 Party()
