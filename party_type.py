@@ -1,14 +1,13 @@
 ﻿#This file is part of Tryton.  The COPYRIGHT file at the top level of this
 #repository contains the full copyright notices and license terms.
-
-from trytond.osv import fields, OSV
+from trytond.model import ModelView, ModelSQL, fields
 
 _STATES_PERSON = {
     "readonly": "active == False or party_type != 'person'",
     "invisible": "party_type != 'person'",
 }
 
-class Party(OSV):
+class Party(ModelSQL, ModelView):
     """Class: Party(OSV)
     This class inherits party.party model and add the types 'person' and
     'organization'. A party with the type 'person' has the basic
