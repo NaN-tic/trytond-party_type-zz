@@ -8,7 +8,7 @@ _STATES_PERSON = {
 }
 
 class Party(ModelSQL, ModelView):
-    """Class: Party(OSV)
+    """
     This class inherits party.party model and add the types 'person' and
     'organization'. A party with the type 'person' has the basic
     attributes firstname and gender.
@@ -27,9 +27,6 @@ class Party(ModelSQL, ModelView):
              ("female", "Female"),
              ("", "")], "Gender", select=1, sort=False,
              readonly=False, states=_STATES_PERSON)
-
-    def __init__(self):
-        super(Party, self).__init__()
 
     def default_party_type(self, cursor, user, context=None):
         """

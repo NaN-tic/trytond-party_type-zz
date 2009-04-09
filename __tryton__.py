@@ -4,7 +4,7 @@
 {
     'name':        'Party Types',
     'name_de_DE':  'Partei Typen',
-    'version':     '0.0.3',
+    'version':     '0.0.4',
     'author':      'virtual things',
     'email':       'info@virtual-things.biz',
     'website':     'http://www.virtual-things.biz/',
@@ -16,7 +16,7 @@
 ''',
     'depends':     ['ir', 'res', 'party',],
     'xml':         [
-                     'party_type.xml',
+                     'party.xml',
                    ],
     'translation': [
 #        'fr_FR.csv',
