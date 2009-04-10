@@ -10,8 +10,8 @@ repository contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'organization')]</field>
         </record>
-        <menuitem name="Organizations" parent="party.menu_party_form"
-                sequence="10" action="act_organization_form"
+        <menuitem name="Parties: Organizations" parent="party.menu_party_form"
+                sequence="5" action="act_organization_form"
                 id="menu_organization_form"/>
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Persons</field>
@@ -20,8 +20,8 @@ repository contains the full copyright notices and license terms. -->
             <field name="domain">[('party_type', '=', 'person')]</field>
             <field name="context">{'party_type': 'person'}</field>
         </record>
-        <menuitem name="Persons" parent="party.menu_party_form"
-                sequence="20" action="act_person_form"
+        <menuitem name="Parties: Persons" parent="party.menu_party_form"
+                sequence="6" action="act_person_form"
                 id="menu_person_form"/>
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_tree">

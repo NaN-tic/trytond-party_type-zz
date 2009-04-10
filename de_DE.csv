@@ -4,8 +4,8 @@ field,"party.party,gender",0,Gender,Geschlecht,0
 field,"party.party,party_type",0,Party Type,Typ Partei,0
 model,"ir.action,name",act_organization_form,Organizations,Organisationen,0
 model,"ir.action,name",act_person_form,Persons,Personen,0
-model,"ir.ui.menu,name",menu_organization_form,Organizations,Organisationen,0
-model,"ir.ui.menu,name",menu_person_form,Persons,Personen,0
+model,"ir.ui.menu,name",menu_organization_form,Parties: Organizations,Parteien: Organisationen,0
+model,"ir.ui.menu,name",menu_person_form,Parties: Persons,Parteien: Personen,0
 selection,"party.party,gender",0,,,0
 selection,"party.party,gender",0,Female,Weiblich,0
 selection,"party.party,gender",0,Male,Männlich,0
