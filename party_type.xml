@@ -12,7 +12,7 @@ repository contains the full copyright notices and license terms. -->
         </record>
         <menuitem name="Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
-                id="menu_organization_form" icon="tryton-list"/>
+                id="menu_organization_form"/>
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Persons</field>
             <field name="res_model">party.party</field>
@@ -22,7 +22,7 @@ repository contains the full copyright notices and license terms. -->
         </record>
         <menuitem name="Persons" parent="party.menu_party_form"
                 sequence="10" action="act_person_form"
-                id="menu_person_form" icon="tryton-list"/>
+                id="menu_person_form"/>
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_tree">
             <field name="model">party.party</field>

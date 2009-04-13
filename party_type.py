@@ -28,9 +28,6 @@ class Party(ModelSQL, ModelView):
              ("", "")], "Gender", select=1, sort=False,
              readonly=False, states=_STATES_PERSON)
 
-    def __init__(self):
-        super(Party, self).__init__()
-
     def default_party_type(self, cursor, user, context=None):
         """
         This method sets the default for field type, depending on the context
