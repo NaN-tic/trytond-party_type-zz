@@ -21,7 +21,7 @@ repository contains the full copyright notices and license terms. -->
             <field name="context">{'party_type': 'person'}</field>
         </record>
         <menuitem name="Persons" parent="party.menu_party_form"
-                sequence="10" action="act_person_form"
+                sequence="15" action="act_person_form"
                 id="menu_person_form"/>
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_tree">
