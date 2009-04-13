@@ -38,6 +38,13 @@ class Party(ModelSQL, ModelView):
         return context.get('party_type', 'organization')
 
     def get_rec_name(self, cursor, user, ids, name, arg, context=None):
+        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
+        This method combines last name and first name for general views.
+        The kind of combination of first and last names may vary from
+        country to country. The pattern used here is:
+        <last_name>, <first_name>
+        Overwrite this method for other combinations.
+        """
         if not ids:
             return {}
         res = {}
@@ -47,6 +54,14 @@ class Party(ModelSQL, ModelView):
         return res
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
+        """get_full_name(self, cursor, user, ids, name, arg, context=None)
+        This method overwrite the standard full name as used in letters or
+        reports to call the name of a personal party.  The kind of
+        combination of first and last names may vary from country to country.
+        The pattern used here is:
+        <first_name> <last_name>
+        Overwrite this method for other combinations.
+        """
         if not ids:
             return []
         res = {}
