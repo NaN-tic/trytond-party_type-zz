@@ -16,7 +16,7 @@
 ''',
     'depends':     ['ir', 'res', 'party',],
     'xml':         [
-                     'party_type.xml',
+                     'party.xml',
                    ],
     'translation': [
 #        'fr_FR.csv',
