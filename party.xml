@@ -5,23 +5,23 @@ repository contains the full copyright notices and license terms. -->
     <data>
         <!-- Menu actions and Menu entrys -->
         <record model="ir.action.act_window" id="act_organization_form">
-            <field name="name">Organizations</field>
+            <field name="name">Organizational Parties</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'organization')]</field>
         </record>
-        <menuitem name="Parties: Organizations" parent="party.menu_party_form"
-                sequence="5" action="act_organization_form"
+        <menuitem name="Organizations" parent="party.menu_party_form"
+                sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
         <record model="ir.action.act_window" id="act_person_form">
-            <field name="name">Persons</field>
+            <field name="name">Personal Parties</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'person')]</field>
             <field name="context">{'party_type': 'person'}</field>
         </record>
-        <menuitem name="Parties: Persons" parent="party.menu_party_form"
-                sequence="6" action="act_person_form"
+        <menuitem name="Persons" parent="party.menu_party_form"
+                sequence="15" action="act_person_form"
                 id="menu_person_form"/>
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_tree">
@@ -47,7 +47,6 @@ repository contains the full copyright notices and license terms. -->
         <record model="ir.ui.view" id="party_view_form">
             <field name="model">party.party</field>
             <field name="inherit" ref="party.party_view_form"/>
-            <field name="priority">10</field>
             <field name="arch" type="xml">
                 <![CDATA[
                 <data>
