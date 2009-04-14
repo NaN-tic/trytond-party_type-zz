@@ -5,7 +5,7 @@ repository contains the full copyright notices and license terms. -->
     <data>
         <!-- Menu actions and Menu entrys -->
         <record model="ir.action.act_window" id="act_organization_form">
-            <field name="name">Organizations</field>
+            <field name="name">Organizational Parties</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'organization')]</field>
@@ -14,7 +14,7 @@ repository contains the full copyright notices and license terms. -->
                 sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
         <record model="ir.action.act_window" id="act_person_form">
-            <field name="name">Persons</field>
+            <field name="name">Personal Parties</field>
             <field name="res_model">party.party</field>
             <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'person')]</field>
