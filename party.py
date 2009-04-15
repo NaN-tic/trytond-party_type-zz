@@ -8,7 +8,7 @@ _STATES_PERSON = {
 }
 
 class Party(ModelSQL, ModelView):
-    """
+    """Class: Party(ModelSQL, ModelView)
     This class inherits party.party model and add the types 'person' and
     'organization'. A party with the type 'person' has the basic
     attributes firstname and gender.
@@ -29,15 +29,22 @@ class Party(ModelSQL, ModelView):
              readonly=False, states=_STATES_PERSON)
 
     def default_party_type(self, cursor, user, context=None):
-        """
+        """default_party_type(self, cursor, user, context=None)
         This method sets the default for field type, depending on the context
-        defined in party_type.xml
+        defined in party_type.xml.
         """
         if context is None:
             context = {}
         return context.get('party_type', 'organization')
 
     def get_rec_name(self, cursor, user, ids, name, arg, context=None):
+        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
+        This method combines last name and first name for general views.
+        The kind of combination of first and last names may vary from
+        country to country. The pattern used here is:
+        <last_name>, <first_name>
+        Overwrite this method for other combinations.
+        """
         if not ids:
             return {}
         res = {}
@@ -47,6 +54,14 @@ class Party(ModelSQL, ModelView):
         return res
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
+        """get_full_name(self, cursor, user, ids, name, arg, context=None)
+        This method overwrite the standard full name as used in letters or
+        reports to call the name of a personal party.  The kind of
+        combination of first and last names may vary from country to country.
+        The pattern used here is:
+        <first_name> <last_name>
+        Overwrite this method for other combinations.
+        """
         if not ids:
             return {}
         res = {}
