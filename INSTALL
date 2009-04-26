@@ -5,14 +5,13 @@ Prerequisites
 -------------
 
  * Python 2.4 or later (http://www.python.org/)
- * trytond 0.0.x or later (http://www.tryton.org/)
+ * trytond 1.2.x or later (http://www.tryton.org/)
  * trytond_party (http://www.tryton.org/)
- * trytond_country (http://www.tryton.org/)
 
 Installation
 ------------
 
-Once you've downloaded and unpacked the trytond_party_type source release, 
+Once you've downloaded and unpacked the trytond_party_type source release,
 enter the directory where the archive was unpacked, and run:
 
     python setup.py install
