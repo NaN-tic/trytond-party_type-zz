@@ -14,7 +14,6 @@ class Party(ModelSQL, ModelView):
     attributes firstname and gender.
     A party with the type 'Organization' has no additional attributes.
     """
-    _description = "PartyType"
     _name = "party.party"
 
     party_type = fields.Selection(
