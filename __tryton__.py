@@ -4,7 +4,7 @@
 {
     'name':        'Distinguish Parties between People and Organizations.',
     'name_de_DE':  'Parteien in Personen und Organisationen unterscheiden.',
-    'version':     '1.2.0',
+    'version':     '1.1.0',
     'author':      'virtual things',
     'email':       'info@virtual-things.biz',
     'website':     'http://www.virtual-things.biz/',
