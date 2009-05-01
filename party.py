@@ -36,37 +36,37 @@ class Party(ModelSQL, ModelView):
             context = {}
         return context.get('party_type', 'organization')
 
-    def get_rec_name(self, cursor, user, ids, name, arg, context=None):
-        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
-        This method combines last name and first name for general views.
+    def _name_get(self, cursor, user, ids, name, arg, delimiter=' ',
+            context=None):
+        """_name_get(self, cursor, user, ids, name, arg, delimiter,
+                     context=None)
+        This method combines last name and first name with a delimiter.
         The kind of combination of first and last names may vary from
-        country to country. The pattern used here is:
-        <last_name>, <first_name>
+        country to country. The general pattern used here is:
+        <last_name><delimiter><first_name>
         Overwrite this method for other combinations.
         """
         if not ids:
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = ", ".join(x for x in [party.name,
-                party.first_name] if x)
+            res[party.id] = party.name + delimiter + party.first_name
         return res
+
+    def get_rec_name(self, cursor, user, ids, name, arg, context=None):
+        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
+        This method combines last name and first name for general views.
+        """
+        delimiter = ", "
+        return self._name_get(cursor, user, ids, name, arg, delimiter,
+                context=None)
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
         """get_full_name(self, cursor, user, ids, name, arg, context=None)
         This method overwrite the standard full name as used in letters or
-        reports to call the name of a personal party.  The kind of
-        combination of first and last names may vary from country to country.
-        The pattern used here is:
-        <first_name> <last_name>
-        Overwrite this method for other combinations.
+        reports to call the name of a party.
         """
-        if not ids:
-            return {}
-        res = {}
-        for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = " ".join(x for x in [party.first_name,
-                party.name] if x)
-        return res
-
+        delimiter = " "
+        return self._name_get(cursor, user, ids, name, arg, delimiter,
+                context=None)
 Party()
