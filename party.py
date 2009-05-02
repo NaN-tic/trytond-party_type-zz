@@ -50,7 +50,8 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = party.name + delimiter + party.first_name
+            res[party.id] = party.name or '' + delimiter \
+                          + party.first_name or ''
         return res
 
     def get_rec_name(self, cursor, user, ids, name, arg, context=None):
