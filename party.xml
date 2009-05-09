@@ -3,26 +3,6 @@
 repository contains the full copyright notices and license terms. -->
 <tryton>
     <data>
-        <!-- Menu actions and Menu entrys -->
-        <record model="ir.action.act_window" id="act_organization_form">
-            <field name="name">Organizational Parties</field>
-            <field name="res_model">party.party</field>
-            <field name="view_type">form</field>
-            <field name="domain">[('party_type', '=', 'organization')]</field>
-        </record>
-        <menuitem name="Organizations" parent="party.menu_party_form"
-                sequence="10" action="act_organization_form"
-                id="menu_organization_form"/>
-        <record model="ir.action.act_window" id="act_person_form">
-            <field name="name">Personal Parties</field>
-            <field name="res_model">party.party</field>
-            <field name="view_type">form</field>
-            <field name="domain">[('party_type', '=', 'person')]</field>
-            <field name="context">{'party_type': 'person'}</field>
-        </record>
-        <menuitem name="Persons" parent="party.menu_party_form"
-                sequence="15" action="act_person_form"
-                id="menu_person_form"/>
         <!-- Views -->
         <record model="ir.ui.view" id="party_view_tree">
             <field name="model">party.party</field>
@@ -71,5 +51,46 @@ repository contains the full copyright notices and license terms. -->
                 ]]>
             </field>
         </record>
+        <!-- Menu actions and Menu entrys -->
+        <record model="ir.action.act_window" id="act_organization_form">
+            <field name="name">Parties: Organizations</field>
+            <field name="res_model">party.party</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('party_type', '=', 'organization')]</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_organization_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="party_view_tree"/>
+            <field name="act_window" ref="act_organization_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_organization_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="party_view_form"/>
+            <field name="act_window" ref="act_organization_form"/>
+        </record>
+
+        <menuitem name="Organizations" parent="party.menu_party_form"
+                sequence="10" action="act_organization_form"
+                id="menu_organization_form"/>
+        <record model="ir.action.act_window" id="act_person_form">
+            <field name="name">Parties: Persons</field>
+            <field name="res_model">party.party</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('party_type', '=', 'person')]</field>
+            <field name="context">{'party_type': 'person'}</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_person_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="party_view_tree"/>
+            <field name="act_window" ref="act_person_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_person_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="party_view_form"/>
+            <field name="act_window" ref="act_person_form"/>
+        </record>
+        <menuitem name="Persons" parent="party.menu_party_form"
+                sequence="15" action="act_person_form"
+                id="menu_person_form"/>
     </data>
 </tryton>
