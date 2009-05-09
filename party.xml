@@ -68,10 +68,10 @@ repository contains the full copyright notices and license terms. -->
             <field name="view" ref="party_view_form"/>
             <field name="act_window" ref="act_organization_form"/>
         </record>
-
         <menuitem name="Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
+
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Parties: Persons</field>
             <field name="res_model">party.party</field>
