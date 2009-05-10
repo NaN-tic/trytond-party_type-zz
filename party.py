@@ -9,8 +9,8 @@ _STATES_PERSON = {
 
 class Party(ModelSQL, ModelView):
     """Class: Party(ModelSQL, ModelView)
-    This class inherits party.party model and add the types 'person' and
-    'organization'. A party with the type 'person' has the basic
+    This class inherits party.party model and adds the types 'person' and
+    'organization'. A party with the type 'Person' has the basic
     attributes firstname and gender.
     A party with the type 'Organization' has no additional attributes.
     """
@@ -48,12 +48,13 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = party.name + ', ' + party.first_name
+            res[party.id] = party.name or '' + delimiter \
+                          + party.first_name or ''
         return res
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
         """get_full_name(self, cursor, user, ids, name, arg, context=None)
-        This method overwrite the standard full name as used in letters or
+        This method overwrites the standard full name as used in letters or
         reports to call the name of a personal party.  The kind of
         combination of first and last names may vary from country to country.
         The pattern used here is:
@@ -64,7 +65,7 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = party.first_name + ' ' + party.name
+            res[party.id] = party.first_name or '' + ' ' + party.name or ''
         return res
 
 Party()
