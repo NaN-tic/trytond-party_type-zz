@@ -68,7 +68,7 @@ repository contains the full copyright notices and license terms. -->
             <field name="view" ref="party_view_form"/>
             <field name="act_window" ref="act_organization_form"/>
         </record>
-        <menuitem name="Organizations" parent="party.menu_party_form"
+        <menuitem name="Parties: Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
 
@@ -89,7 +89,7 @@ repository contains the full copyright notices and license terms. -->
             <field name="view" ref="party_view_form"/>
             <field name="act_window" ref="act_person_form"/>
         </record>
-        <menuitem name="Persons" parent="party.menu_party_form"
+        <menuitem name="Parties: Persons" parent="party.menu_party_form"
                 sequence="15" action="act_person_form"
                 id="menu_person_form"/>
     </data>
