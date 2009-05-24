@@ -48,7 +48,8 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = party.name or '' + ', ' + party.first_name or ''
+            res[party.id] = ", ".join(x for x in [party.name,
+                                                  party.first_name] if x)
         return res
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
@@ -64,7 +65,8 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = party.first_name or '' + ' ' + party.name or ''
+            res[party.id] = ", ".join(x for x in [party.first_name,
+                                                  party.name] if x)
         return res
 
 Party()
