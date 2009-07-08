@@ -65,7 +65,7 @@ class Party(ModelSQL, ModelView):
             return {}
         res = {}
         for party in self.browse(cursor, user, ids, context=context):
-            res[party.id] = ", ".join(x for x in [party.first_name,
+            res[party.id] = " ".join(x for x in [party.first_name,
                                                   party.name] if x)
         return res
 
