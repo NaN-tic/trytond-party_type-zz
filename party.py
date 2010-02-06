@@ -19,8 +19,10 @@ class Party(ModelSQL, ModelView):
     party_type = fields.Selection(
             [("organization", "Organization"), ("person", "Person")],
             "Party Type", select=1, readonly=False,
+            on_change=['party_type'],
             states={"readonly": "active == False"})
-    first_name = fields.Char("First Name", size=None, states=_STATES_PERSON)
+    first_name = fields.Char("First Name", size=None,
+            states=_STATES_PERSON)
     gender = fields.Selection(
             [("male", "Male"),
              ("female", "Female"),
@@ -71,6 +73,15 @@ class Party(ModelSQL, ModelView):
                     args2.append((self._rec_name, args[i][1], args[i][2]))
             i += 1
         return args2
+
+    def on_change_party_type(self, cursor, user, ids, values, context=None):
+        res = {}
+        res['party_type'] = values['party_type']
+        if not values.get('party_type') \
+                or values.get('party_type') == 'organization':
+            res['first_name'] = False
+            res['gender'] = False
+        return res
 
 
     def get_full_name(self, cursor, user, ids, name, arg, context=None):
