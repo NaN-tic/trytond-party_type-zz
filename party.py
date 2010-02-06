@@ -76,9 +76,9 @@ class Party(ModelSQL, ModelView):
 
     def on_change_party_type(self, cursor, user, ids, values, context=None):
         res = {}
-        res['party_type'] = values['party_type']
-        if not values.get('party_type') \
-                or values.get('party_type') == 'organization':
+        party_type = values.get('party_type', 'organization')
+        if party_type == 'organization':
+            res['party_type'] = party_type
             res['first_name'] = False
             res['gender'] = False
         return res
