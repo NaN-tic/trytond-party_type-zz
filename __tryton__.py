@@ -42,7 +42,9 @@ http://code.google.com/p/tryton/wiki/Testing1_2_0#External_Modules.
     'Organisation'. Zusätzlich werden Parteien vom Typ 'Person' erweitert
     um die Merkmale 'Vorname' und 'Geschlecht'.
     ''',
-    'depends':     ['ir', 'res', 'party',],
+    'depends':     [
+            'party',
+            'company',],
     'xml':         ['party.xml',],
     'translation': [#'fr_FR.csv',
                     #'es_ES.csv',

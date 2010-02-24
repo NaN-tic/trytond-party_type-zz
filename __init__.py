@@ -2,3 +2,4 @@
 #repository contains the full copyright notices and license terms.
 
 from party import *
+from company import *
