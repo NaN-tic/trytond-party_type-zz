@@ -42,4 +42,40 @@ class Employee(ModelSQL, ModelView):
         res['party_type'] = 'person'
         return res
 
+    def get_rec_name(self, cursor, user, ids, name, arg, context=None):
+        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
+        This method combines last name and first name for general views.
+        The kind of combination of first and last names may vary from
+        country to country. The pattern used here is:
+        <last_name>, <first_name>
+        Overwrite this method for other combinations.
+        """
+        if not ids:
+            return {}
+        res = {}
+        for employee in self.browse(cursor, user, ids, context=context):
+            res[employee.id] = ", ".join(x for x in [employee.name,
+                    employee.first_name] if x)
+        return res
+
+    def search_rec_name(self, cursor, user, name, args, context=None):
+        args2 = []
+        i = 0
+        while i < len(args):
+            ids = self.search(cursor, user, [
+                ('name', args[i][1], args[i][2]),
+                ], limit=1, context=context)
+            if ids:
+                args2.append(('name', args[i][1], args[i][2]))
+            else:
+                ids = self.search(cursor, user, [
+                             ('first_name', args[i][1], args[i][2]),
+                             ], limit=1, context=context)
+                if ids:
+                    args2.append(('first_name', args[i][1], args[i][2]))
+                else:
+                    args2.append((self._rec_name, args[i][1], args[i][2]))
+            i += 1
+        return args2
+
 Employee()
