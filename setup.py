@@ -24,12 +24,12 @@ setup(name='trytond_party_type',
     url=info.get('website', ''),
     download_url="http://downloads.tryton.org/" + \
             info.get('version', '0.0.1').rsplit('.', 1)[0] + '/',
-    package_dir={'trytond.modules.party_types': '.'},
+    package_dir={'trytond.modules.party_type': '.'},
     packages=[
-        'trytond.modules.party_types',
+        'trytond.modules.party_type',
     ],
     package_data={
-        'trytond.modules.party_types': info.get('xml', []) \
+        'trytond.modules.party_type': info.get('xml', []) \
                 + info.get('translation', [])
     },
     classifiers=[
