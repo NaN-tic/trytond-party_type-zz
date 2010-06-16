@@ -74,7 +74,7 @@ class Party(ModelSQL, ModelView):
             i += 1
         return args2
 
-    def on_change_party_type(self, cursor, user, ids, values, context=None):
+    def on_change_party_type(self, cursor, user, values, context=None):
         res = {}
         party_type = values.get('party_type', 'organization')
         if party_type == 'organization':

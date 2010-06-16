@@ -15,7 +15,7 @@ class Company(ModelSQL, ModelView):
             context = {}
         return 'organization'
 
-    def on_change_party_type(self, cursor, user, ids, values, context=None):
+    def on_change_party_type(self, cursor, user, values, context=None):
         res = {}
         res['party_type'] = 'organization'
         res['first_name'] = False
@@ -37,7 +37,7 @@ class Employee(ModelSQL, ModelView):
             context = {}
         return 'person'
 
-    def on_change_party_type(self, cursor, user, ids, values, context=None):
+    def on_change_party_type(self, cursor, user, values, context=None):
         res = {}
         res['party_type'] = 'person'
         return res
