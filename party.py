@@ -1,4 +1,4 @@
-﻿#This file is part of Tryton.  The COPYRIGHT file at the top level of this
+#This file is part of Tryton.  The COPYRIGHT file at the top level of this
 #repository contains the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
 
@@ -38,8 +38,8 @@ class Party(ModelSQL, ModelView):
             context = {}
         return context.get('party_type', 'organization')
 
-    def get_rec_name(self, cursor, user, ids, name, arg, context=None):
-        """get_rec_name(self, cursor, user, ids, name, arg, context=None)
+    def get_rec_name(self, cursor, user, ids, name, context=None):
+        """get_rec_name(self, cursor, user, ids, name, context=None)
         This method combines last name and first name for general views.
         The kind of combination of first and last names may vary from
         country to country. The pattern used here is:
@@ -84,8 +84,8 @@ class Party(ModelSQL, ModelView):
         return res
 
 
-    def get_full_name(self, cursor, user, ids, name, arg, context=None):
-        """get_full_name(self, cursor, user, ids, name, arg, context=None)
+    def get_full_name(self, cursor, user, ids, name, context=None):
+        """get_full_name(self, cursor, user, ids, name, context=None)
         This method overwrites the standard full name as used in letters or
         reports to call the name of a personal party.  The kind of
         combination of first and last names may vary from country to country.
