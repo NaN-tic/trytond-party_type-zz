@@ -58,24 +58,18 @@ class Employee(ModelSQL, ModelView):
                     employee.first_name] if x)
         return res
 
-    def search_rec_name(self, cursor, user, name, args, context=None):
-        args2 = []
-        i = 0
-        while i < len(args):
+    def search_rec_name(self, cursor, user, name, clause, context=None):
+        ids = self.search(cursor, user, [
+            ('name',) + clause[1:],
+            ], limit=1, context=context)
+        if ids:
+            return [('name',) + clause[1:]]
+        else:
             ids = self.search(cursor, user, [
-                ('name', args[i][1], args[i][2]),
+                ('first_name',) + clause[1:],
                 ], limit=1, context=context)
             if ids:
-                args2.append(('name', args[i][1], args[i][2]))
-            else:
-                ids = self.search(cursor, user, [
-                             ('first_name', args[i][1], args[i][2]),
-                             ], limit=1, context=context)
-                if ids:
-                    args2.append(('first_name', args[i][1], args[i][2]))
-                else:
-                    args2.append((self._rec_name, args[i][1], args[i][2]))
-            i += 1
-        return args2
+                return [('first_name',) + clause[1:]]
+        return [(self._rec_name,) + clause[1:]]
 
 Employee()
