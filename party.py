@@ -1,10 +1,12 @@
 #This file is part of Tryton.  The COPYRIGHT file at the top level of this
 #repository contains the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
+from trytond.pyson import Equal, Eval, Not, Or, Bool
 
 _STATES_PERSON = {
-    "readonly": "active == False or party_type != 'person'",
-    "invisible": "party_type != 'person'",
+    "readonly": Or(Not(Bool(Eval('active'))),
+            Not(Equal(Eval('party_type'), 'person'))),
+    "invisible": Not(Equal(Eval('party_type'), 'person')),
 }
 
 class Party(ModelSQL, ModelView):
@@ -20,7 +22,7 @@ class Party(ModelSQL, ModelView):
             [("organization", "Organization"), ("person", "Person")],
             "Party Type", select=1, readonly=False,
             on_change=['party_type'],
-            states={"readonly": "active == False"})
+            states={'readonly': Not(Bool(Eval('active')))})
     first_name = fields.Char("First Name", size=None,
             states=_STATES_PERSON)
     gender = fields.Selection(
