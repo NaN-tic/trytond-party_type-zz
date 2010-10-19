@@ -23,6 +23,7 @@
         ],
     'xml': [
         'party.xml',
+        'company.xml'
         ],
     'translation': [
         'de_DE.csv',
