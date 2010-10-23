@@ -4,7 +4,7 @@
 {
     'name': 'Party Type',
     'name_de_DE': 'Parteien Typ',
-    'version': '1.5.1',
+    'version': '1.5.2',
     'author': 'virtual things',
     'email': 'info@virtual-things.biz',
     'website': 'http://www.virtual-things.biz/',
