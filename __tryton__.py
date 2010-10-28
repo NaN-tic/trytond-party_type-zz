@@ -8,15 +8,19 @@
     'author': 'virtual things',
     'email': 'info@virtual-things.biz',
     'website': 'http://www.virtual-things.biz/',
-    'description': '''Distinction of Parties between people and organization
-    - Extends the party model by the types 'person' or 'organization'
-    - Adds attributes 'first name' and 'gender' for parties of type 'person'
-''',
-    'description_de_DE': '''Unterscheidung von Parteien nach Person oder Organisation
-    - Erweitert das Modell von Parteien um die Typen 'Person' und 'Organisation'.
-    - Fügt die Merkmale 'Vorname' und 'Geschlecht' zu Parteien des Typs
-      'Person' hinzu.
-''',
+    'description': '''
+        Distinction of Parties between people and organization
+        - Extends the party model by the types 'person' or 'organization'
+        - Adds attributes 'first name' and 'gender' for parties of
+          type 'person'
+    ''',
+    'description_de_DE': '''
+        Unterscheidung von Parteien nach Person oder Organisation
+        - Erweitert das Modell von Parteien um die Typen 'Person'
+          und 'Organisation'.
+        - Fügt die Merkmale 'Vorname' und 'Geschlecht' zu Parteien des Typs
+         'Person' hinzu.
+    ''',
     'depends': [
         'party',
         'company',
