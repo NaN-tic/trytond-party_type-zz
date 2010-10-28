@@ -8,7 +8,7 @@
     'author': 'virtual things',
     'email': 'info@virtual-things.biz',
     'website': 'http://www.virtual-things.biz/',
-    'description': '''Distinction of Parties between People and Organization
+    'description': '''Distinction of Parties between people and organization
     - Extends the party model by the types 'person' or 'organization'
     - Adds attributes 'first name' and 'gender' for parties of type 'person'
 ''',
