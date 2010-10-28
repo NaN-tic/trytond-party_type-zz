@@ -55,6 +55,8 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
+        if context is None:
+            context = {}
         if not ids:
             return {}
         res = {}
@@ -67,6 +69,8 @@ class Party(ModelSQL, ModelView):
         """Party.search_rec_name(cursor, user, name, clause[, context=None])
         This method adds the first name to search clause for searching persons.
         """
+        if context is None:
+            context = {}
         ids = self.search(cursor, user, [
                     ('name',) + clause[1:],
                 ], limit=1, context=context)
@@ -104,6 +108,8 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
+        if context is None:
+            context = {}
         if not ids:
             return {}
         res = {}
