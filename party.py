@@ -2,7 +2,7 @@
 #repository contains the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pyson import Equal, Eval, Not, Or, Bool
-
+from trytond.transaction import Transaction
 
 _STATES_PERSON = {
     "readonly": Or(Not(Bool(Eval('active'))),
@@ -36,17 +36,15 @@ class Party(ModelSQL, ModelView):
             ], "Gender", select=1, sort=False, readonly=False,
             states=_STATES_PERSON)
 
-    def default_party_type(self, cursor, user, context=None):
-        """Party.default_party_type(cursor, user[, context])
+    def default_party_type(self):
+        """Party.default_party_type()
         This method sets the default value for field type, depending
         on the context defined in party_type.xml.
         """
-        if context is None:
-            context = {}
-        return context.get('party_type', 'organization')
+        return Transaction().context.get('party_type', 'organization')
 
-    def get_rec_name(self, cursor, user, ids, name, context=None):
-        """Party.get_rec_name(cursor, user, ids, name[, context])
+    def get_rec_name(self, ids, name):
+        """Party.get_rec_name(ids, name)
         This method combines last and first name for views.
         The kind of combination of first and last names may vary from
         country to country. The pattern used here is::
@@ -55,37 +53,29 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
-        if context is None:
-            context = {}
         if not ids:
             return {}
         res = {}
-        for party in self.browse(cursor, user, ids, context=context):
+        for party in self.browse(ids):
             res[party.id] = ", ".join(x for x in [
                     party.name, party.first_name] if x)
         return res
 
-    def search_rec_name(self, cursor, user, name, clause, context=None):
-        """Party.search_rec_name(cursor, user, name, clause[, context=None])
+    def search_rec_name(self, name, clause):
+        """Party.search_rec_name(name, clause)
         This method adds the first name to search clause for searching persons.
         """
-        if context is None:
-            context = {}
-        ids = self.search(cursor, user, [
-                    ('name',) + clause[1:],
-                ], limit=1, context=context)
+        ids = self.search([('name',) + clause[1:]], limit=1)
         if ids:
             return [('name',) + clause[1:]]
         else:
-            ids = self.search(cursor, user, [
-                        ('first_name',) + clause[1:],
-                    ], limit=1, context=context)
+            ids = self.search([('first_name',) + clause[1:]], limit=1)
             if ids:
                 return [('first_name',) + clause[1:]]
         return [(self._rec_name,) + clause[1:]]
 
-    def on_change_party_type(self, cursor, user, values, context=None):
-        '''Party.on_change_party_type(cursor, user, values[, context])
+    def on_change_party_type(self, values):
+        '''Party.on_change_party_type(values)
         Method to clear party attributes, when changing a party with
         party type 'person' to type 'organization'.
         '''
@@ -97,8 +87,8 @@ class Party(ModelSQL, ModelView):
             res['gender'] = False
         return res
 
-    def get_full_name(self, cursor, user, ids, name, context=None):
-        """Party.get_full_name(cursor, user, ids, name[, context=None])
+    def get_full_name(self, ids, name):
+        """Party.get_full_name(ids, name)
         This method overwrites the standard full name as used in reports
         to call the name of a person party. The kind of combination of
         first and last names may vary from country to country.
@@ -108,12 +98,10 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
-        if context is None:
-            context = {}
         if not ids:
             return {}
         res = {}
-        for party in self.browse(cursor, user, ids, context=context):
+        for party in self.browse(ids):
             res[party.id] = " ".join(x for x in [
                     party.first_name, party.name] if x)
         return res
