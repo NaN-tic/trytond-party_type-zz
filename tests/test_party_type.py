@@ -25,7 +25,7 @@ class PartyTypeTestCase(unittest.TestCase):
         '''
         Test views.
         '''
-        self.assertRaises(Exception, test_view('party_type'))
+        test_view('party_type')
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
