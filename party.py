@@ -72,7 +72,7 @@ class Party(ModelSQL, ModelView):
             ids = self.search([('first_name',) + clause[1:]], limit=1)
             if ids:
                 return [('first_name',) + clause[1:]]
-        return [(self._rec_name,) + clause[1:]]
+        return super(Party, self).search_rec_name(name, clause)
 
     def on_change_party_type(self, values):
         '''Party.on_change_party_type(values)
