@@ -11,13 +11,16 @@ major_version = int(major_version)
 minor_version = int(minor_version)
 
 requires = []
+next_minor_version = minor_version + 1
+if minor_version % 2:
+    next_minor_version += 1
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|workflow|webdav)(\W|$)', dep):
         requires.append('trytond_%s >= %s.%s, < %s.%s' %
                 (dep, major_version, minor_version, major_version,
-                    minor_version + 1))
+                    next_minor_version))
 requires.append('trytond >= %s.%s, < %s.%s' %
-        (major_version, minor_version, major_version, minor_version + 1))
+        (major_version, minor_version, major_version, next_minor_version))
 
 setup(name='trytond_party_type',
     version=info.get('version', '0.0.1'),
