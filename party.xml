@@ -55,7 +55,6 @@ repository contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window" id="act_organization_form">
             <field name="name">Parties: Organizations</field>
             <field name="res_model">party.party</field>
-            <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'organization')]</field>
         </record>
         <record model="ir.action.act_window.view" id="act_organization_view1">
@@ -75,7 +74,6 @@ repository contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Parties: Persons</field>
             <field name="res_model">party.party</field>
-            <field name="view_type">form</field>
             <field name="domain">[('party_type', '=', 'person')]</field>
             <field name="context">{'party_type': 'person'}</field>
         </record>
