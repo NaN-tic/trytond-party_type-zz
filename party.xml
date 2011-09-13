@@ -38,7 +38,7 @@ repository contains the full copyright notices and license terms. -->
                     <label name="party_type"/>
                     <field name="party_type"/>
                 </xpath>
-                <xpath expr="/form/field[@name='active']"
+                <xpath expr="/form/group[@id=&quot;checkboxes&quot;]"
                         position="after">
                     <label name="name"/>
                     <field name="name"/>
