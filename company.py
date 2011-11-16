@@ -56,16 +56,16 @@ class Employee(ModelSQL, ModelView):
 
     def search_rec_name(self, name, clause):
         ids = self.search([
-            ('name',) + clause[1:],
+            ('name',) + tuple(clause[1:]),
             ], limit=1)
         if ids:
-            return [('name',) + clause[1:]]
+            return [('name',) + tuple(clause[1:])]
         else:
             ids = self.search([
-                ('first_name',) + clause[1:],
+                ('first_name',) + tuple(clause[1:]),
                 ], limit=1)
             if ids:
-                return [('first_name',) + clause[1:]]
-        return [(self._rec_name,) + clause[1:]]
+                return [('first_name',) + tuple(clause[1:])]
+        return [(self._rec_name,) + tuple(clause[1:])]
 
 Employee()

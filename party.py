@@ -65,13 +65,13 @@ class Party(ModelSQL, ModelView):
         """Party.search_rec_name(name, clause)
         This method adds the first name to search clause for searching persons.
         """
-        ids = self.search([('name',) + clause[1:]], limit=1)
+        ids = self.search([('name',) + tuple(clause[1:])], limit=1)
         if ids:
-            return [('name',) + clause[1:]]
+            return [('name',) + tuple(clause[1:])]
         else:
-            ids = self.search([('first_name',) + clause[1:]], limit=1)
+            ids = self.search([('first_name',) + tuple(clause[1:])], limit=1)
             if ids:
-                return [('first_name',) + clause[1:]]
+                return [('first_name',) + tuple(clause[1:])]
         return super(Party, self).search_rec_name(name, clause)
 
     def on_change_party_type(self, values):
