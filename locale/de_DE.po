@@ -1,0 +1,51 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:party.party,first_name:0"
+msgid "First Name"
+msgstr "Vorname"
+
+msgctxt "field:party.party,gender:0"
+msgid "Gender"
+msgstr "Geschlecht"
+
+msgctxt "field:party.party,party_type:0"
+msgid "Party Type"
+msgstr "Typ Partei"
+
+msgctxt "model:ir.action,name:act_organization_form"
+msgid "Parties: Organizations"
+msgstr "Parteien: Organisationen"
+
+msgctxt "model:ir.action,name:act_person_form"
+msgid "Parties: Persons"
+msgstr "Parteien: Personen"
+
+msgctxt "model:ir.ui.menu,name:menu_organization_form"
+msgid "Parties: Organizations"
+msgstr "Parteien: Organisationen"
+
+msgctxt "model:ir.ui.menu,name:menu_person_form"
+msgid "Parties: Persons"
+msgstr "Parteien: Personen"
+
+msgctxt "selection:party.party,gender:0"
+msgid ""
+msgstr ""
+
+msgctxt "selection:party.party,gender:0"
+msgid "Female"
+msgstr "Weiblich"
+
+msgctxt "selection:party.party,gender:0"
+msgid "Male"
+msgstr "Männlich"
+
+msgctxt "selection:party.party,party_type:0"
+msgid "Organization"
+msgstr "Organisation"
+
+msgctxt "selection:party.party,party_type:0"
+msgid "Person"
+msgstr "Person"
