@@ -9,6 +9,7 @@ _STATES_PERSON = {
             Not(Equal(Eval('party_type'), 'person'))),
     "invisible": Not(Equal(Eval('party_type'), 'person')),
 }
+_STATES_PERSON_DEPENDS = ['active', 'party_type']
 
 
 class Party(ModelSQL, ModelView):
@@ -27,14 +28,15 @@ class Party(ModelSQL, ModelView):
                 'party_type',
             ], states={
                 'readonly': Not(Bool(Eval('active'))),
-            })
-    first_name = fields.Char("First Name", size=None, states=_STATES_PERSON)
+            }, depends=['active'])
+    first_name = fields.Char("First Name", size=None, states=_STATES_PERSON,
+        depends=_STATES_PERSON_DEPENDS)
     gender = fields.Selection([
                 ("male", "Male"),
                 ("female", "Female"),
                 ("", ""),
             ], "Gender", select=1, sort=False, readonly=False,
-            states=_STATES_PERSON)
+            states=_STATES_PERSON, depends=_STATES_PERSON_DEPENDS)
 
     def default_party_type(self):
         """Party.default_party_type()
