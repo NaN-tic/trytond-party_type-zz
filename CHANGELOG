@@ -1,6 +1,7 @@
 Version 2.1.2 - 2012-07-01
 * Remove party_type from company form view
 * Add locale ca_ES
+* Add locale es_ES
 
 Version 2.1.1 - 2012-01-26
 * Point release

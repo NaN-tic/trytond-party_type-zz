@@ -5,6 +5,7 @@
     'name': 'Party Type',
     'name_ca_ES': 'Tipus de tercers',
     'name_de_DE': 'Parteien Typ',
+    'name_es_ES': 'Tipos de terceros',
     'version': '2.1.2',
     'author': 'virtual things',
     'email': 'info@virtual-things.biz',
@@ -27,6 +28,11 @@
         - Fügt die Merkmale 'Vorname' und 'Geschlecht' zu Parteien des Typs
          'Person' hinzu.
     ''',
+    'description_es_ES': '''
+        Diferencia en los terceros según personas físicas i organizaciones
+        - Amplia el modelo de tercero y añade el tipos 'personas' y 'organización'
+        - Añade el atributo 'firts name' y 'gender' a los terceros'
+    ''',
     'depends': [
         'party',
         'company',
@@ -38,5 +44,6 @@
     'translation': [
         'locale/ca_ES.po',
         'locale/de_DE.po',
+        'locale/es_ES.po',
         ],
 }
