@@ -53,7 +53,7 @@ repository contains the full copyright notices and license terms. -->
         </record>
         <!-- Menu actions and Menu entrys -->
         <record model="ir.action.act_window" id="act_organization_form">
-            <field name="name">Parties: Organizations</field>
+            <field name="name">Parties by Organizations</field>
             <field name="res_model">party.party</field>
             <field name="domain">[('party_type', '=', 'organization')]</field>
         </record>
@@ -67,12 +67,12 @@ repository contains the full copyright notices and license terms. -->
             <field name="view" ref="party_view_form"/>
             <field name="act_window" ref="act_organization_form"/>
         </record>
-        <menuitem name="Parties: Organizations" parent="party.menu_party_form"
+        <menuitem name="Parties by Organizations" parent="party.menu_party_form"
                 sequence="10" action="act_organization_form"
                 id="menu_organization_form"/>
 
         <record model="ir.action.act_window" id="act_person_form">
-            <field name="name">Parties: Persons</field>
+            <field name="name">Parties by Persons</field>
             <field name="res_model">party.party</field>
             <field name="domain">[('party_type', '=', 'person')]</field>
             <field name="context">{'party_type': 'person'}</field>
@@ -87,7 +87,7 @@ repository contains the full copyright notices and license terms. -->
             <field name="view" ref="party_view_form"/>
             <field name="act_window" ref="act_person_form"/>
         </record>
-        <menuitem name="Parties: Persons" parent="party.menu_party_form"
+        <menuitem name="Parties by Persons" parent="party.menu_party_form"
                 sequence="15" action="act_person_form"
                 id="menu_person_form"/>
     </data>
