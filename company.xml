@@ -3,6 +3,25 @@
 this repository contains the full copyright notices and license terms. -->
 <tryton>
     <data>
+        <record model="ir.ui.view" id="company_view_form">
+            <field name="model">company.company</field>
+            <field name="type">tree</field>
+            <field name="inherit" ref="company.company_view_form"/>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <data>
+                    <xpath
+                        expr="/form/label[@name='party_type']"
+                        position="replace">
+                    </xpath>
+                    <xpath
+                        expr="/form/field[@name='party_type']"
+                        position="replace">
+                    </xpath>
+                </data>
+                ]]>
+            </field>
+        </record>
         <record model="ir.ui.view" id="employee_view_tree">
             <field name="model">company.employee</field>
             <field name="type">tree</field>
