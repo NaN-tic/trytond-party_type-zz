@@ -4,6 +4,10 @@
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pyson import Equal, Eval, Not, Or, Bool
 from trytond.transaction import Transaction
+from trytond.pool import PoolMeta
+
+__all__ = ['Party']
+__metaclass__ = PoolMeta
 
 _STATES_PERSON = {
     "readonly": Or(Not(Bool(Eval('active'))),
@@ -13,14 +17,14 @@ _STATES_PERSON = {
 _STATES_PERSON_DEPENDS = ['active', 'party_type']
 
 
-class Party(ModelSQL, ModelView):
+class Party:
     """trytond.model.Party()
     This class inherits party.party model and adds a type attribute with
     'person' and 'organization' as values. A party with the type
     'Person' has the additional attributes firstname and gender.
     A party with the type 'Organization' has no additional attributes.
     """
-    _name = "party.party"
+    __name__ = "party.party"
 
     party_type = fields.Selection([
                 ("organization", "Organization"),
@@ -39,15 +43,17 @@ class Party(ModelSQL, ModelView):
             ], "Gender", select=1, sort=False, readonly=False,
             states=_STATES_PERSON, depends=_STATES_PERSON_DEPENDS)
 
-    def default_party_type(self):
+    @staticmethod
+    def default_party_type():
         """Party.default_party_type()
         This method sets the default value for field type, depending
         on the context defined in party_type.xml.
         """
         return Transaction().context.get('party_type', 'organization')
 
-    def get_rec_name(self, ids, name):
-        """Party.get_rec_name(ids, name)
+    @classmethod
+    def get_rec_name(cls, records, name):
+        """Party.get_rec_name(records, name)
         This method combines last and first name for views.
         The kind of combination of first and last names may vary from
         country to country. The pattern used here is::
@@ -56,42 +62,44 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
-        if not ids:
+        if not records:
             return {}
         res = {}
-        for party in self.browse(ids):
+        for party in records:
             res[party.id] = ", ".join(x for x in [
                     party.name, party.first_name] if x)
         return res
 
-    def search_rec_name(self, name, clause):
+    @classmethod
+    def search_rec_name(cls, name, clause):
         """Party.search_rec_name(name, clause)
         This method adds the first name to search clause for searching persons.
         """
-        ids = self.search([('name',) + tuple(clause[1:])], limit=1)
+        ids = cls.search([('name',) + tuple(clause[1:])], limit=1)
         if ids:
             return [('name',) + tuple(clause[1:])]
         else:
-            ids = self.search([('first_name',) + tuple(clause[1:])], limit=1)
+            ids = cls.search([('first_name',) + tuple(clause[1:])], limit=1)
             if ids:
                 return [('first_name',) + tuple(clause[1:])]
-        return super(Party, self).search_rec_name(name, clause)
+        return super(Party, cls).search_rec_name(name, clause)
 
-    def on_change_party_type(self, values):
+    def on_change_party_type(self):
         '''Party.on_change_party_type(values)
         Method to clear party attributes, when changing a party with
         party type 'person' to type 'organization'.
         '''
         res = {}
-        party_type = values.get('party_type', 'organization')
+        party_type = self.party_type or  'organization'
         if party_type == 'organization':
             res['party_type'] = party_type
             res['first_name'] = False
             res['gender'] = False
         return res
 
-    def get_full_name(self, ids, name):
-        """Party.get_full_name(ids, name)
+    @classmethod
+    def get_full_name(cls, records, name):
+        """Party.get_full_name(records, name)
         This method overwrites the standard full name as used in reports
         to call the name of a person party. The kind of combination of
         first and last names may vary from country to country.
@@ -101,13 +109,10 @@ class Party(ModelSQL, ModelView):
 
         Overwrite this method for other conventions of person names.
         """
-        if not ids:
+        if not records:
             return {}
         res = {}
-        for party in self.browse(ids):
+        for party in records:
             res[party.id] = " ".join(x for x in [
                     party.first_name, party.name] if x)
         return res
-
-Party()
-
