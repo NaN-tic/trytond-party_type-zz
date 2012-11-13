@@ -38,13 +38,13 @@ setup(name='trytonzz_party_type',
     url='http://www.virtual-things.biz',
     download_url="http://downloads.tryton.org/" + \
             info.get('version', '0.0.1').rsplit('.', 1)[0] + '/',
-    package_dir={'trytonzz.modules.party_type': '.'},
+    package_dir={'trytond.modules.party_type': '.'},
     packages=[
-        'trytonzz.modules.party_type',
-        'trytonzz.modules.party_type.tests',
+        'trytond.modules.party_type',
+        'trytond.modules.party_type.tests',
     ],
     package_data={
-        'trytonzz.modules.party_type': info.get('xml', []) \
+        'trytond.modules.party_type': info.get('xml', []) \
             + ['tryton.cfg', 'locale/*.po'],
     },
     classifiers=[
@@ -68,9 +68,9 @@ setup(name='trytonzz_party_type',
     install_requires=requires,
     zip_safe=False,
     entry_points="""
-    [trytonzz.modules]
-    party_type = trytonzz.modules.party_type
+    [trytond.modules]
+    party_type = trytond.modules.party_type
     """,
     test_suite='tests',
-    test_loader='trytonzz.test_loader:Loader',
+    test_loader='trytond.test_loader:Loader',
 )
