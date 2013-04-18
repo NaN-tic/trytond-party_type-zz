@@ -56,8 +56,8 @@ class Employee:
             return {}
         res = {}
         for employee in records:
-            res[employee.id] = ", ".join(x for x in [employee.name,
-                    employee.first_name] if x)
+            res[employee.id] = ", ".join(x for x in [employee.party.name,
+                    employee.party.first_name] if x)
         return res
 
     @classmethod
