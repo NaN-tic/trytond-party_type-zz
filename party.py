@@ -27,11 +27,10 @@ class Party:
     __name__ = "party.party"
 
     party_type = fields.Selection([
-                ("organization", "Organization"),
-                ("person", "Person"),
-            ], "Party Type", select=1, readonly=False, on_change=[
-                'party_type',
-            ], states={
+            ("organization", "Organization"),
+            ("person", "Person"),
+            ], "Party Type", select=1, readonly=False, on_change=['party_type'],
+            states={
                 'readonly': Not(Bool(Eval('active'))),
             }, depends=['active'])
     first_name = fields.Char("First Name", size=None, states=_STATES_PERSON,
@@ -39,7 +38,7 @@ class Party:
     gender = fields.Selection([
                 ("male", "Male"),
                 ("female", "Female"),
-                ("", ""),
+                (None, ""),
             ], "Gender", select=1, sort=False, readonly=False,
             states=_STATES_PERSON, depends=_STATES_PERSON_DEPENDS)
 
@@ -93,8 +92,8 @@ class Party:
         party_type = self.party_type or  'organization'
         if party_type == 'organization':
             res['party_type'] = party_type
-            res['first_name'] = False
-            res['gender'] = False
+            res['first_name'] = None
+            res['gender'] = None
         return res
 
     @classmethod
