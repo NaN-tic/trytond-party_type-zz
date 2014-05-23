@@ -29,7 +29,7 @@ class Party:
     party_type = fields.Selection([
             ("organization", "Organization"),
             ("person", "Person"),
-            ], "Party Type", select=1, readonly=False, on_change=['party_type'],
+            ], "Party Type", select=1, readonly=False,
             states={
                 'readonly': Not(Bool(Eval('active'))),
             }, depends=['active'])
@@ -83,6 +83,7 @@ class Party:
                 return [('first_name',) + tuple(clause[1:])]
         return super(Party, cls).search_rec_name(name, clause)
 
+    @fields.depends('party_type')
     def on_change_party_type(self):
         '''Party.on_change_party_type(values)
         Method to clear party attributes, when changing a party with
