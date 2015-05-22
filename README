@@ -1,7 +1,8 @@
-trytond_party_type
-==================
+virtualthings_party_type
+========================
 
-The party_type module of the Tryton application platform.
+The party_type module from virtual things for the Tryton
+application platform.
 
 Installing
 ----------
@@ -18,11 +19,6 @@ please contact the programmers at
   --------------
   website: http://www.virtual-things.biz/
   email: info@virtual-things.biz
-
-  mbsolutions
-  -----------
-  website: http://www.m9s.biz/
-  email: info@m9s.biz
 
 If you encounter any problems with Tryton, please don't hesitate to ask
 questions on the Tryton bug tracker, mailing list, wiki or IRC channel:
@@ -41,5 +37,4 @@ Copyright
 ---------
 
 See COPYRIGHT
-
 
