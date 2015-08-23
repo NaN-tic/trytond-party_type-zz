@@ -30,7 +30,9 @@ contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window" id="act_organization_form">
             <field name="name">Organizations</field>
             <field name="res_model">party.party</field>
-            <field name="domain">[('party_type', '=', 'organization')]</field>
+            <field name="domain"
+                eval="[('party_type', '=', 'organization')]"
+                pyson="1"/>
         </record>
         <record model="ir.action.act_window.view" id="act_organization_view1">
             <field name="sequence" eval="10"/>
@@ -48,8 +50,12 @@ contains the full copyright notices and license terms. -->
         <record model="ir.action.act_window" id="act_person_form">
             <field name="name">Persons</field>
             <field name="res_model">party.party</field>
-            <field name="domain">[('party_type', '=', 'person')]</field>
-            <field name="context">{'party_type': 'person'}</field>
+            <field name="domain"
+                eval="[('party_type', '=', 'person')]"
+                pyson="1"/>
+            <field name="context"
+                eval="{'party_type': 'person'}"
+                pyson="1"/>
         </record>
         <record model="ir.action.act_window.view" id="act_person_view1">
             <field name="sequence" eval="10"/>
