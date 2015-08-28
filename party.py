@@ -1,5 +1,6 @@
-# The COPYRIGHT file at the top level of this repository
-# contains the full copyright notices and license terms.
+#This file is part party_type module for Tryton.
+#The COPYRIGHT file at the top level of this repository contains
+#the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pyson import Equal, Eval, Not, Or, Bool
 from trytond.transaction import Transaction
@@ -17,7 +18,7 @@ STATES_PERSON_DEPENDS = ['active', 'party_type']
 
 
 class Party(ModelSQL, ModelView):
-    """trytond.model.Party()
+    """
     This class inherits party.party model and adds a type attribute with
     'person' and 'organization' as values. A party with the type
     'Person' has the additional attributes firstname and gender.
@@ -76,17 +77,15 @@ class Party(ModelSQL, ModelView):
 
     @fields.depends('party_type')
     def on_change_party_type(self):
-        '''Party.on_change_party_type()
+        '''
         Method to clear party attributes, when changing a party with
         party type 'person' to type 'organization'.
         '''
-        res = {}
         party_type = self.party_type if self.party_type else 'organization'
         if party_type == 'organization':
-            res['party_type'] = party_type
-            res['first_name'] = None
-            res['gender'] = None
-        return res
+            self.party_type = party_type
+            self.first_name = None
+            self.gender = None
 
     def get_full_name(self, name):
         """Party.get_full_name(self, name)
