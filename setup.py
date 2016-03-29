@@ -1,62 +1,79 @@
 #!/usr/bin/env python
-# The COPYRIGHT file at the top level of this repository
-# contains the full copyright notices and license terms.
+# This file is part party_type module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
+
 from setuptools import setup
 import re
 import os
-import ConfigParser
+import io
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
-MODULE = 'party_type'
-PREFIX = 'virtualthings'
 MODULE2PREFIX = {}
 
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return io.open(
+        os.path.join(os.path.dirname(__file__), fname),
+        'r', encoding='utf-8').read()
 
-config = ConfigParser.ConfigParser()
+def get_require_version(name):
+    if minor_version % 2:
+        require = '%s >= %s.%s.dev0, < %s.%s'
+    else:
+        require = '%s >= %s.%s, < %s.%s'
+    require %= (name, major_version, minor_version,
+        major_version, minor_version + 1)
+    return require
+
+config = ConfigParser()
 config.readfp(open('tryton.cfg'))
 info = dict(config.items('tryton'))
 for key in ('depends', 'extras_depend', 'xml'):
     if key in info:
         info[key] = info[key].strip().splitlines()
-version_info = info.get('version', '0.0.1')
-branch, _ = version_info.rsplit('.', 1)
-dev_branch = float(branch) * 10
-# Warning: Check, after version 3.9 must follow 4.0. This calculation only
-# works if the Tryton project follows a strict sequence version number policy.
-if not (dev_branch % 2):  # dev_branch is a release branch
-    dev_branch -= 1
-next_branch = dev_branch + 2
-branch_range = str(dev_branch / 10), str(next_branch / 10)
+version = info.get('version', '0.0.1')
+major_version, minor_version, _ = version.split('.', 2)
+major_version = int(major_version)
+minor_version = int(minor_version)
+name = 'trytonzz_party_type'
+download_url = 'https://bitbucket.org/zikzakmedia/trytond-party_type'
+
 requires = []
-
 for dep in info.get('depends', []):
-    if not re.match(r'(ir|res|webdav)(\W|$)', dep):
+    if not re.match(r'(ir|res)(\W|$)', dep):
         prefix = MODULE2PREFIX.get(dep, 'trytond')
-        requires += ['%s_%s >= %s, < %s' % ((prefix, dep,) + branch_range)]
-requires += ['trytond >= %s, < %s' % branch_range]
-tests_require = ['proteus >= %s, < %s' % branch_range]
+        requires.append(get_require_version('%s_%s' % (prefix, dep)))
+requires.append(get_require_version('trytond'))
 
-setup(
-    name='%s_%s' % (PREFIX, MODULE),
-    version=version_info,
-    description='Tryton module %s from %s' % (MODULE, PREFIX),
+tests_require = []
+dependency_links = []
+if minor_version % 2:
+    # Add development index for testing with proteus
+    dependency_links.append('https://trydevpi.tryton.org/')
+
+setup(name=name,
+    version=version,
+    description='Tryton Party Type Module',
     long_description=read('README'),
-    author='virtual things',
-    author_email='info@virtual-things.biz',
-    url='http://www.virtual-things.biz/',
-    package_dir={'trytond.modules.%s' % MODULE: '.'},
+    author='Zikzakmedia SL',
+    author_email='zikzak@zikzakmedia.com',
+    url='https://bitbucket.org/zikzakmedia/',
+    download_url=download_url,
+    keywords='',
+    package_dir={'trytond.modules.party_type': '.'},
     packages=[
-        'trytond.modules.%s' % MODULE,
-        'trytond.modules.%s.tests' % MODULE,
-    ],
+        'trytond.modules.party_type',
+        'trytond.modules.party_type.tests',
+        ],
     package_data={
-        'trytond.modules.%s' % MODULE: (
-            info.get('xml', []) + [
-                '*.odt', '*.ods', 'icons/*.svg', 'tryton.cfg', 'view/*.xml',
-                'locale/*.po', 'tests/*.rst']),
-    },
+        'trytond.modules.party_type': (info.get('xml', [])
+            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', '*.odt',
+                'icons/*.svg', 'tests/*.rst']),
+        },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
@@ -64,23 +81,39 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Legal Industry',
-        'Intended Audience :: Manufacturing',
         'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Natural Language :: Bulgarian',
+        'Natural Language :: Catalan',
+        'Natural Language :: Czech',
+        'Natural Language :: Dutch',
         'Natural Language :: English',
+        'Natural Language :: French',
         'Natural Language :: German',
+        'Natural Language :: Hungarian',
+        'Natural Language :: Italian',
+        'Natural Language :: Portuguese (Brazilian)',
+        'Natural Language :: Russian',
+        'Natural Language :: Slovenian',
+        'Natural Language :: Spanish',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Office/Business',
-        'Topic :: Office/Business :: Financial :: Accounting',
-    ],
+        ],
     license='GPL-3',
     install_requires=requires,
+    dependency_links=dependency_links,
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    %s = trytond.modules.%s
-    """ % (MODULE, MODULE),
+    party_type = trytond.modules.party_type
+    """,
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
     tests_require=tests_require,
-)
+    use_2to3=True,
+    )
