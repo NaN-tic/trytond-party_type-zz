@@ -69,11 +69,16 @@ class Party(ModelSQL, ModelView):
         """Party.search_rec_name(name, clause)
         This method adds the first name to search clause for searching persons.
         """
-        parties = cls.search([('name',) + tuple(clause[1:])])
-        parties2 = cls.search([('first_name',) + tuple(clause[1:])])
-        if any((parties, parties2)):
-            return [('id', 'in', [x.id for x in parties + parties2])]
-        return super(Party, cls).search_rec_name(name, clause)
+        domain = super(Party, cls).search_rec_name(name, clause)
+        if clause[1].startswith('!') or clause[1].startswith('not '):
+            bool_op = 'AND'
+        else:
+            bool_op = 'OR'
+        return [bool_op,
+            domain,
+            ('name',) + tuple(clause[1:]),
+            ('first_name',) + tuple(clause[1:]),
+            ]
 
     @fields.depends('party_type')
     def on_change_party_type(self):
