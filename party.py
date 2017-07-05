@@ -1,7 +1,8 @@
 #This file is part party_type module for Tryton.
 #The COPYRIGHT file at the top level of this repository contains
 #the full copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields
+from trytond.model import fields
+from trytond.pool import PoolMeta
 from trytond.pyson import Equal, Eval, Not, Or, Bool
 from trytond.transaction import Transaction
 
@@ -17,29 +18,23 @@ STATES_PERSON = {
 STATES_PERSON_DEPENDS = ['active', 'party_type']
 
 
-class Party(ModelSQL, ModelView):
-    """
-    This class inherits party.party model and adds a type attribute with
-    'person' and 'organization' as values. A party with the type
-    'Person' has the additional attributes firstname and gender.
-    A party with the type 'Organization' has no additional attributes.
-    """
+class Party:
+    __metaclass__ = PoolMeta
     __name__ = "party.party"
-
-    party_type = fields.Selection(
-        [
-            ("organization", "Organization"),
-            ("person", "Person"),
-        ], "Type", select=True, states={
+    party_type = fields.Selection([
+            ('organization', 'Organization'),
+            ('person', 'Person'),
+        ], 'Type', select=True,
+        states={
             'readonly': Not(Bool(Eval('active'))),
         }, depends=['active'])
-    first_name = fields.Char(
-        "First Name", states=STATES_PERSON, depends=STATES_PERSON_DEPENDS)
-    gender = fields.Selection(
-        [
-            ("male", "Male"),
-            ("female", "Female"),
-            (None, ""),
+    first_name = fields.Char('First Name',
+        states=STATES_PERSON, depends=STATES_PERSON_DEPENDS)
+    gender = fields.Selection([
+            (None, ''),
+            ('male', 'Male'),
+            ('female', 'Female'),
+            ('other', 'Other'),
         ], "Gender", select=True, sort=False,
         states=STATES_PERSON, depends=STATES_PERSON_DEPENDS)
 

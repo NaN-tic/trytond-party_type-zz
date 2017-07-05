@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -41,6 +41,10 @@ msgstr "Mujer"
 msgctxt "selection:party.party,gender:"
 msgid "Male"
 msgstr "Hombre"
+
+msgctxt "selection:party.party,gender:"
+msgid "Other"
+msgstr "Otro"
 
 msgctxt "selection:party.party,party_type:"
 msgid "Organization"
